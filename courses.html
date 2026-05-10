@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ma Liste de Courses - Gestion Épurée</title>
+    <title>Ma Liste de Courses - Unique</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -31,19 +31,11 @@
 
         .container { max-width: 600px; margin: 0 auto; padding: 15px; }
 
-        /* Header & Boutons */
         header { text-align: center; margin-bottom: 20px; padding-top: 10px; }
         h1 { margin: 0; font-size: 1.5rem; color: var(--primary); }
         .status { font-size: 0.8rem; color: var(--gray); margin-top: 5px; }
-        .hint { font-size: 0.75rem; color: var(--gray); text-align: center; margin-top: 5px; font-style: italic; }
 
-        .global-actions {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .global-actions { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
 
         .btn {
             border: none; padding: 12px 20px; border-radius: 50px;
@@ -53,12 +45,11 @@
             transition: transform 0.1s;
         }
         .btn:active { transform: scale(0.96); }
-        .btn-primary { background: var(--primary); color: white; flex: 1; min-width: 140px; }
-        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); flex: 1; min-width: 140px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); }
         .btn-danger { background: var(--danger); color: white; }
-        .btn-manage { background: #8e44ad; color: white; flex: 1; min-width: 140px; }
+        .btn-manage { background: #8e44ad; color: white; }
 
-        /* Cards & Inputs */
         .card {
             background: var(--card); border-radius: 15px;
             padding: 20px; margin-bottom: 20px;
@@ -66,16 +57,6 @@
         }
         h3 { margin-top: 0; font-size: 1.1rem; color: var(--primary); border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
 
-        .input-group { display: flex; flex-direction: column; gap: 10px; }
-        
-        #smartInput {
-            width: 100%; padding: 18px; border: 2px solid var(--primary);
-            border-radius: 12px; font-size: 18px; background: #fff;
-            font-weight: 500; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        #smartInput:focus { outline: none; border-color: var(--accent); box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2); }
-
-        /* Tags */
         .tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
         .tag {
             background: var(--light-gray); color: var(--primary);
@@ -84,7 +65,6 @@
         }
         .tag span { color: var(--danger); font-weight: bold; font-size: 1.1rem; cursor: pointer; padding-left: 4px; }
 
-        /* Listes */
         .list-section { margin-bottom: 30px; }
         .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px; }
         .list-title { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
@@ -131,10 +111,10 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
-        /* Styles Gestion (Communs) */
         .mg-header-box {
             background: white; padding: 15px; border-radius: 10px;
             margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 10;
         }
         .mg-input-row { display: flex; gap: 10px; margin-bottom: 10px; }
         .mg-actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -153,14 +133,13 @@
             border-color: #f39c12; 
         }
 
-        .btn-sm { padding: 8px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-sm { padding: 8px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; flex: 1; }
         .btn-save { background: var(--accent); color: white; }
         .btn-save:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
         .btn-delete { background: var(--danger); color: white; }
         .btn-delete:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
-        .btn-cancel { background: var(--gray); color: white; }
+        .btn-add { background: var(--primary); color: white; }
         
-        /* Spécifique Produits */
         .mg-prod-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .mg-col { background: white; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .mg-col-header { padding: 10px; background: var(--light-gray); font-weight: bold; font-size: 0.9rem; border-bottom: 1px solid #eee; }
@@ -189,12 +168,11 @@
         <input type="file" id="fileInput" accept=".json" onchange="importData(this)">
     </div>
 
-    <!-- ZONE DE SAISIE UNIQUE -->
+    <!-- ZONE DE SAISIE UNIQUE (ACCUEIL) -->
     <div class="card">
-        <h3>Ajouter un produit</h3>
+        <h3>Ajouter un produit (Rapide)</h3>
         <div class="input-group">
-            <input type="text" id="smartInput" placeholder="Ex: Laitiers Yaourt  ou  Fruits : Pommes" autocapitalize="words" autocomplete="off">
-            <div class="hint">Format : <strong>Catégorie</strong> + <strong>Produit</strong> (séparés par un espace ou deux-points)</div>
+            <input type="text" id="smartInput" placeholder="Ex: Laitiers Yaourt" autocapitalize="words" autocomplete="off">
         </div>
         <div class="tags-cloud" id="titlesContainer"></div>
     </div>
@@ -238,32 +216,37 @@
             <div id="tab-cat" class="tab-content active">
                 <div class="mg-header-box">
                     <div class="mg-input-row">
-                        <input type="text" id="mgCatInput" placeholder="Nom de la catégorie (ou cliquez sur une catégorie ci-dessous)" style="flex:1;">
+                        <input type="text" id="mgCatInput" placeholder="Nom de la catégorie" style="flex:1;">
                         <button class="btn btn-sm btn-save" id="mgCatBtn" onclick="saveCategory()">Ajouter</button>
                     </div>
                     <div class="mg-actions-row">
                         <button class="btn btn-sm btn-delete" id="mgCatDelBtn" onclick="deleteSelectedCategory()" disabled>🗑️ Supprimer la sélection</button>
                         <button class="btn btn-sm btn-cancel" id="mgCatCancelBtn" onclick="cancelCatEdit()" style="display:none;">Annuler</button>
                     </div>
-                    <p style="font-size:0.75rem; color:#999; margin-top:8px;">Cliquez sur une catégorie dans la liste pour la charger ici.</p>
+                    <p style="font-size:0.75rem; color:#999; margin-top:8px;">Cliquez sur une catégorie ci-dessous pour la modifier.</p>
                 </div>
                 <ul class="mg-list" id="mgCatList"></ul>
             </div>
 
             <!-- Onglet Produits -->
             <div id="tab-prod" class="tab-content">
-                <div class="mg-header-box">
-                    <label style="font-size:0.8rem; color:#666; display:block; margin-bottom:5px;">Filtrer par catégorie :</label>
-                    <select id="mgProdCatSelect" onchange="renderMgProducts()" style="padding:8px; width:100%; margin-bottom:10px; border:1px solid #ddd; border-radius:6px;"></select>
+                <!-- ZONE UNIQUE DE SAISIE / MODIFICATION -->
+                <div class="mg-header-box" style="border: 2px solid var(--primary);">
+                    <label style="font-size:0.8rem; color:#666; display:block; margin-bottom:5px;">Catégorie :</label>
+                    <select id="mgProdCatSelect" onchange="onCategoryChange()" style="padding:8px; width:100%; margin-bottom:10px; border:1px solid #ddd; border-radius:6px;"></select>
                     
                     <div class="mg-input-row">
-                        <input type="text" id="mgProdInput" placeholder="Nom du produit (ou cliquez sur un produit ci-dessous)" style="flex:1;">
-                        <button class="btn btn-sm btn-save" id="mgProdSaveBtn" onclick="saveProductFromHeader()" disabled>💾 Enregistrer</button>
+                        <input type="text" id="mgProdInput" placeholder="Nom du produit (Taper ou sélectionner dans la liste)" style="flex:1; font-size:1rem; padding:12px;">
+                        <button class="btn btn-sm btn-add" id="mgProdActionBtn" onclick="handleProdAction()">➕ Ajouter</button>
                     </div>
                     <div class="mg-actions-row">
-                        <button class="btn btn-sm btn-delete" id="mgProdDelBtn" onclick="deleteSelectedProduct()" disabled>🗑️ Supprimer la sélection</button>
+                        <button class="btn btn-sm btn-delete" id="mgProdDelBtn" onclick="deleteSelectedProduct()" disabled>🗑️ Supprimer</button>
                         <button class="btn btn-sm btn-cancel" id="mgProdCancelBtn" onclick="cancelProdEdit()" style="display:none;">Annuler</button>
                     </div>
+                    <p style="font-size:0.75rem; color:#999; margin-top:5px;">
+                        • Pour <strong>ajouter</strong> : Choisissez la catégorie, tapez le nom, cliquez sur Ajouter.<br>
+                        • Pour <strong>modifier</strong> : Cliquez sur un produit dans la liste ci-dessous.
+                    </p>
                 </div>
                 
                 <div class="mg-prod-grid">
@@ -284,8 +267,8 @@
     // --- DONNÉES ---
     let titles = ["Aucun"];
     let items = [];
-    let editCatId = null; // Index de la catégorie sélectionnée/éditée
-    let editProdId = null; // ID du produit sélectionné/édité
+    let editCatId = null; 
+    let editProdId = null; 
     let currentMgCatFilter = "Tous";
 
     // --- INITIALISATION ---
@@ -348,7 +331,7 @@
         setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
     }
 
-    // --- LOGIQUE PRINCIPALE (SAISIE UNIQUE) ---
+    // --- LOGIQUE PRINCIPALE (SAISIE UNIQUE ACCUEIL) ---
     function handleSmartInput() {
         const input = document.getElementById('smartInput');
         const rawText = input.value.trim();
@@ -500,11 +483,9 @@
         
         list.innerHTML = "";
         
-        // État du bouton principal
         const isEditing = editCatId !== null;
         btn.textContent = isEditing ? "Modifier" : "Ajouter";
         
-        // État des boutons d'action
         delBtn.disabled = !isEditing;
         cancelBtn.style.display = isEditing ? "inline-block" : "none";
 
@@ -544,14 +525,12 @@
         if (exists) { showToast("Déjà existant"); return; }
 
         if (editCatId !== null) {
-            // Modification
             const oldName = titles[editCatId];
             titles[editCatId] = val;
             items.forEach(item => { if(item.title === oldName) item.title = val; });
             showToast("Catégorie modifiée");
             cancelCatEdit();
         } else {
-            // Ajout
             if (titles.includes(val)) { showToast("Existe déjà"); return; }
             titles.push(val);
             titles.sort((a, b) => a.localeCompare(b, 'fr'));
@@ -564,6 +543,13 @@
         renderMgCategories();
         renderTitles();
         renderLists();
+        
+        // Force le rafraîchissement du select si on est dans l'onglet produit
+        const select = document.getElementById('mgProdCatSelect');
+        if(select) {
+            // On force la reconstruction au prochain rendu
+            currentMgCatFilter = "Tous"; 
+        }
     }
 
     function deleteSelectedCategory() {
@@ -582,6 +568,8 @@
             renderTitles();
             renderLists();
             showToast("Catégorie supprimée");
+            
+            currentMgCatFilter = "Tous";
         }
     }
 
@@ -591,25 +579,49 @@
         renderMgCategories();
     }
 
-    // --- GESTION PRODUITS ---
-    function renderMgProducts() {
+    // --- GESTION PRODUITS (CORRIGÉ) ---
+    
+    // Fonction appelée explicitement quand on change le select
+    function onCategoryChange() {
+        const select = document.getElementById('mgProdCatSelect');
+        currentMgCatFilter = select.value;
+        renderMgProducts(false); // false = ne pas reconstruire le select, juste la liste
+    }
+
+    function renderMgProducts(rebuildSelect = true) {
         const filterSelect = document.getElementById('mgProdCatSelect');
-        // Remplir le select si nécessaire
-        if (filterSelect.options.length === 0 || filterSelect.options.length !== titles.length + 1) {
+        
+        if (rebuildSelect) {
+            // Sauvegarde temporaire de la sélection actuelle
+            const tempSelected = currentMgCatFilter;
+            
+            // Reconstruction complète
             filterSelect.innerHTML = '<option value="Tous">Toutes les catégories</option>';
             titles.forEach(t => {
-                const opt = document.createElement('option'); opt.value = t; opt.textContent = t;
+                const opt = document.createElement('option'); 
+                opt.value = t; 
+                opt.textContent = t;
                 filterSelect.appendChild(opt);
             });
-            if (currentMgCatFilter && titles.includes(currentMgCatFilter)) filterSelect.value = currentMgCatFilter;
-            else filterSelect.value = "Tous";
+            
+            // Restauration intelligente
+            if (titles.includes(tempSelected)) {
+                filterSelect.value = tempSelected;
+                currentMgCatFilter = tempSelected;
+            } else {
+                filterSelect.value = "Tous";
+                currentMgCatFilter = "Tous";
+            }
+        } else {
+            // Juste mise à jour de la variable globale si besoin (déjà fait dans onCategoryChange)
+            currentMgCatFilter = filterSelect.value;
         }
-        currentMgCatFilter = filterSelect.value;
 
         const list = document.getElementById('mgProdList');
         const countSpan = document.getElementById('mgProdCount');
+        
         const input = document.getElementById('mgProdInput');
-        const saveBtn = document.getElementById('mgProdSaveBtn');
+        const actionBtn = document.getElementById('mgProdActionBtn');
         const delBtn = document.getElementById('mgProdDelBtn');
         const cancelBtn = document.getElementById('mgProdCancelBtn');
 
@@ -622,18 +634,18 @@
         filteredItems.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
         countSpan.textContent = filteredItems.length;
 
-        // État des boutons
         const isEditing = editProdId !== null;
-        saveBtn.disabled = !isEditing;
-        delBtn.disabled = !isEditing;
-        cancelBtn.style.display = isEditing ? "inline-block" : "none";
         
-        if(isEditing) {
-            saveBtn.textContent = "💾 Mettre à jour";
-            saveBtn.disabled = false;
+        if (isEditing) {
+            actionBtn.textContent = "💾 Modifier";
+            actionBtn.className = "btn btn-sm btn-save";
+            delBtn.disabled = false;
+            cancelBtn.style.display = "inline-block";
         } else {
-            saveBtn.textContent = "💾 Enregistrer (Sélectionner d'abord)";
-            saveBtn.disabled = true;
+            actionBtn.textContent = "➕ Ajouter";
+            actionBtn.className = "btn btn-sm btn-add";
+            delBtn.disabled = true;
+            cancelBtn.style.display = "none";
         }
 
         if (filteredItems.length === 0) {
@@ -661,34 +673,45 @@
         const item = items.find(i => i.id === id);
         if (item) {
             const input = document.getElementById('mgProdInput');
+            const select = document.getElementById('mgProdCatSelect');
+            
             input.value = item.name;
+            select.value = item.title;
+            currentMgCatFilter = item.title;
+            
             input.focus();
             input.select();
-            renderMgProducts();
+            renderMgProducts(false); // Pas besoin de reconstruire le select ici
         }
     }
 
-    function saveProductFromHeader() {
-        if (editProdId === null) {
-            showToast("Veuillez sélectionner un produit dans la liste d'abord");
-            return;
-        }
-        
+    function handleProdAction() {
         const input = document.getElementById('mgProdInput');
+        const select = document.getElementById('mgProdCatSelect');
         const val = input.value.trim();
-        if (!val) { showToast("Nom vide"); return; }
+        const cat = select.value;
 
-        const item = items.find(i => i.id === editProdId);
-        if (item) {
-            item.name = val;
+        if (!val) { showToast("Nom vide"); return; }
+        if (cat === "Tous") { showToast("Sélectionnez une catégorie"); return; }
+
+        if (editProdId !== null) {
+            const item = items.find(i => i.id === editProdId);
+            if (item) {
+                item.name = val;
+                item.title = cat;
+                saveData();
+                renderMgProducts(false); 
+                renderLists();
+                showToast("Produit modifié");
+                cancelProdEdit();
+            }
+        } else {
+            items.push({ id: Date.now(), title: cat, name: val, isReady: false, isBought: false });
             saveData();
-            // CORRECTION ICI : On rafraîchit l'affichage ET on annule la sélection
-            renderMgProducts(); 
+            input.value = "";
+            renderMgProducts(false);
             renderLists();
-            showToast("Produit modifié");
-            // Optionnel : garder la sélection ou l'annuler. Ici on annule pour confirmer l'action.
-            // Si vous voulez modifier plusieurs produits à la suite, commentez la ligne ci-dessous :
-            cancelProdEdit(); 
+            showToast("Produit ajouté");
         }
     }
 
@@ -699,43 +722,23 @@
             items = items.filter(i => i.id !== editProdId);
             cancelProdEdit();
             saveData();
-            renderMgProducts();
+            renderMgProducts(false);
             renderLists();
             showToast("Produit supprimé");
         }
     }
 
-    function addMgProduct() {
-        const catSelect = document.getElementById('mgProdCatSelect');
-        const input = document.getElementById('mgProdInput');
-        const cat = catSelect.value;
-        const name = input.value.trim();
-
-        if (cat === "Tous") { showToast("Sélectionnez une catégorie d'abord"); return; }
-        if (!name) { showToast("Nom du produit requis"); return; }
-
-        items.push({ id: Date.now(), title: cat, name: name, isReady: false, isBought: false });
-        saveData();
-        input.value = "";
-        renderMgProducts();
-        renderLists();
-        showToast("Produit ajouté");
-    }
-
     function cancelProdEdit() {
         editProdId = null;
         document.getElementById('mgProdInput').value = "";
-        renderMgProducts();
+        renderMgProducts(false);
     }
 
     // Écouteurs
     document.getElementById('smartInput').addEventListener('keypress', e => { if(e.key==='Enter') handleSmartInput(); });
     document.getElementById('mgCatInput').addEventListener('keypress', e => { if(e.key==='Enter') saveCategory(); });
     document.getElementById('mgProdInput').addEventListener('keypress', e => { 
-        if(e.key==='Enter') { 
-            if(editProdId !== null) saveProductFromHeader(); 
-            else addMgProduct(); 
-        }
+        if(e.key==='Enter') handleProdAction(); 
     });
 
 </script>

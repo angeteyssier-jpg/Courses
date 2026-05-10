@@ -6,6 +6,7 @@
     "Entretien",
     "Fromages",
     "Fruits",
+    "Hygiène",
     "Laiterie",
     "Légumes",
     "Légumes en boite",
@@ -51,6 +52,13 @@
     {
       "id": 1778436019020,
       "title": "Boissons",
+      "name": "Blanc",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438814861,
+      "title": "Poissons",
       "name": "Blanc",
       "isReady": false,
       "isBought": false
@@ -196,6 +204,20 @@
       "isBought": false
     },
     {
+      "id": 1778439770797,
+      "title": "Condiments",
+      "name": "Huile d'olive",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439762157,
+      "title": "Condiments",
+      "name": "Huile Tournesol 3l Friture",
+      "isReady": false,
+      "isBought": false
+    },
+    {
       "id": 1778438519662,
       "title": "Légumes",
       "name": "Légumes",
@@ -206,6 +228,27 @@
       "id": 1778438568804,
       "title": "Légumes en boite",
       "name": "Maïs",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439832780,
+      "title": "Hygiène",
+      "name": "Mouchoirs",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439599498,
+      "title": "Hygiène",
+      "name": "Mousse à raser",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439826500,
+      "title": "Hygiène",
+      "name": "Mousse à raser",
       "isReady": false,
       "isBought": false
     },
@@ -231,9 +274,72 @@
       "isBought": false
     },
     {
+      "id": 1778438908387,
+      "title": "Entretien",
+      "name": "P.Q.",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439468541,
+      "title": "Condiments",
+      "name": "Poivre",
+      "isReady": false,
+      "isBought": false
+    },
+    {
       "id": 1778437530064,
       "title": "Légumes",
       "name": "Pommes de Terre",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438880995,
+      "title": "Viandes",
+      "name": "Poulet (Blancs de)",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438849901,
+      "title": "Viandes",
+      "name": "Poulet Roti",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438926820,
+      "title": "Entretien",
+      "name": "Produit chiottes cuvettes",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438968865,
+      "title": "Entretien",
+      "name": "Produit Lave-vaiselle",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438951554,
+      "title": "Entretien",
+      "name": "Produit vaiselle",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439611713,
+      "title": "Hygiène",
+      "name": "Rasoirs 3 lames mini",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439009088,
+      "title": "Boissons",
+      "name": "Ricard",
       "isReady": false,
       "isBought": false
     },
@@ -259,23 +365,30 @@
       "isBought": false
     },
     {
+      "id": 1778439438510,
+      "title": "Entretien",
+      "name": "Sac congélation",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439358128,
+      "title": "Entretien",
+      "name": "Sac poubelle 30l chambre",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439381392,
+      "title": "Entretien",
+      "name": "Sac poubelle 50l (pas haute)",
+      "isReady": false,
+      "isBought": false
+    },
+    {
       "id": 1778437513230,
       "title": "Légumes",
       "name": "Salade",
-      "isReady": false,
-      "isBought": false
-    },
-    {
-      "id": 1778438771590,
-      "title": "Poissons",
-      "name": "Saumon",
-      "isReady": false,
-      "isBought": false
-    },
-    {
-      "id": 1778438783519,
-      "title": "Poissons",
-      "name": "Thon en boite",
       "isReady": false,
       "isBought": false
     },
@@ -287,61 +400,75 @@
       "isBought": false
     },
     {
-      "id": 1778438814861,
+      "id": 1778438771590,
       "title": "Poissons",
-      "name": "Blanc",
+      "name": "Saumon",
       "isReady": false,
       "isBought": false
     },
     {
-      "id": 1778438849901,
-      "title": "Viandes",
-      "name": "Poulet Roti",
+      "id": 1778439592442,
+      "title": "Hygiène",
+      "name": "Savon à barbe",
       "isReady": false,
       "isBought": false
     },
     {
-      "id": 1778438880995,
-      "title": "Viandes",
-      "name": "Poulet (Blancs de)",
+      "id": 1778439558707,
+      "title": "Hygiène",
+      "name": "Savon de Marseille",
       "isReady": false,
       "isBought": false
     },
     {
-      "id": 1778438908387,
+      "id": 1778439583850,
+      "title": "Hygiène",
+      "name": "Savon liquide",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439461845,
+      "title": "Condiments",
+      "name": "Sel",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438783519,
+      "title": "Poissons",
+      "name": "Thon en boite",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439661600,
+      "title": "Légumes",
+      "name": "Tomates",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439651624,
+      "title": "Légumes en boite",
+      "name": "Tomates entières pelées",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439747798,
+      "title": "Condiments",
+      "name": "Vinaigre",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439735814,
       "title": "Entretien",
-      "name": "P.Q.",
-      "isReady": false,
-      "isBought": false
-    },
-    {
-      "id": 1778438926820,
-      "title": "Entretien",
-      "name": "Produit chiottes cuvettes",
-      "isReady": false,
-      "isBought": false
-    },
-    {
-      "id": 1778438951554,
-      "title": "Entretien",
-      "name": "Produit vaiselle",
-      "isReady": false,
-      "isBought": false
-    },
-    {
-      "id": 1778438968865,
-      "title": "Entretien",
-      "name": "Produit Lave-vaiselle",
-      "isReady": false,
-      "isBought": false
-    },
-    {
-      "id": 1778439009088,
-      "title": "Boissons",
-      "name": "Ricard",
+      "name": "Vinaigre ménager",
       "isReady": false,
       "isBought": false
     }
   ],
-  "date": "2026-05-10T18:53:36.228Z"
+  "date": "2026-05-10T19:05:02.011Z"
 }
