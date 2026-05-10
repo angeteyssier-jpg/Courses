@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ma Liste de Courses Mobile</title>
+    <title>Ma Liste de Courses - Gestion Épurée</title>
     <style>
         :root {
             --primary: #2c3e50;
             --accent: #27ae60;
             --select: #2980b9;
+            --danger: #e74c3c;
             --bg: #f4f6f7;
             --card: #ffffff;
             --text: #333;
             --gray: #95a5a6;
+            --light-gray: #ecf0f1;
+            --highlight: #fff3cd;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -23,283 +26,194 @@
             margin: 0;
             padding: 0;
             color: var(--text);
-            padding-bottom: 80px; /* Espace pour le scroll */
+            padding-bottom: 80px;
         }
 
-        .container {
-            max-width: 600px; /* Largeur max style mobile même sur tablette */
-            margin: 0 auto;
-            padding: 15px;
-        }
+        .container { max-width: 600px; margin: 0 auto; padding: 15px; }
 
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-top: 10px;
-        }
+        /* Header & Boutons */
+        header { text-align: center; margin-bottom: 20px; padding-top: 10px; }
         h1 { margin: 0; font-size: 1.5rem; color: var(--primary); }
         .status { font-size: 0.8rem; color: var(--gray); margin-top: 5px; }
+        .hint { font-size: 0.75rem; color: var(--gray); text-align: center; margin-top: 5px; font-style: italic; }
 
-        /* Boutons Globaux */
         .global-actions {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
+            border: none; padding: 12px 20px; border-radius: 50px;
+            font-size: 0.9rem; font-weight: 600; cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 8px; justify-content: center;
             transition: transform 0.1s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: center;
         }
         .btn:active { transform: scale(0.96); }
-        
-        .btn-primary { background: var(--primary); color: white; flex: 1; }
-        .btn-accent { background: var(--accent); color: white; flex: 1; }
-        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); flex: 1; }
-        .btn-danger { background: #e74c3c; color: white; }
+        .btn-primary { background: var(--primary); color: white; flex: 1; min-width: 140px; }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); flex: 1; min-width: 140px; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-manage { background: #8e44ad; color: white; flex: 1; min-width: 140px; }
 
-        /* Sections de saisie */
+        /* Cards & Inputs */
         .card {
-            background: var(--card);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: var(--card); border-radius: 15px;
+            padding: 20px; margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-
         h3 { margin-top: 0; font-size: 1.1rem; color: var(--primary); border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
 
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
+        .input-group { display: flex; flex-direction: column; gap: 10px; }
+        
+        #smartInput {
+            width: 100%; padding: 18px; border: 2px solid var(--primary);
+            border-radius: 12px; font-size: 18px; background: #fff;
+            font-weight: 500; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
+        #smartInput:focus { outline: none; border-color: var(--accent); box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2); }
 
-        input, select {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-size: 16px; /* Empêche le zoom sur iPhone */
-            background: #fafafa;
-            appearance: none;
-        }
-        input:focus, select:focus {
-            border-color: var(--select);
-            outline: none;
-            background: #fff;
-        }
-
-        /* Tags Catégories */
-        .tags-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
+        /* Tags */
+        .tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
         .tag {
-            background: #ecf0f1;
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: var(--light-gray); color: var(--primary);
+            padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+            display: flex; align-items: center; gap: 6px;
         }
-        .tag span {
-            color: #e74c3c;
-            font-weight: bold;
-            font-size: 1.2rem;
-            line-height: 1;
-            cursor: pointer;
-            padding-left: 5px;
-        }
+        .tag span { color: var(--danger); font-weight: bold; font-size: 1.1rem; cursor: pointer; padding-left: 4px; }
 
         /* Listes */
-        .list-section {
-            margin-bottom: 30px;
-        }
-        
-        .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 0 5px;
-        }
+        .list-section { margin-bottom: 30px; }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px; }
         .list-title { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
         .badge { background: var(--gray); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; }
         .badge.active { background: var(--select); }
-        .badge.done { background: var(--accent); }
 
         ul { list-style: none; padding: 0; margin: 0; }
-
         li {
-            background: var(--card);
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background: var(--card); margin-bottom: 10px; padding: 15px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: space-between;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-            transition: all 0.2s;
         }
+        .item-info { flex: 1; padding-right: 15px; cursor: pointer; }
+        .item-cat { font-size: 0.7rem; text-transform: uppercase; color: var(--gray); font-weight: 700; display: block; margin-bottom: 3px; }
+        .item-name { font-size: 1.1rem; font-weight: 500; display: block; }
+        .checkbox-area { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        input[type="checkbox"] { width: 28px; height: 28px; margin: 0; cursor: pointer; accent-color: var(--select); }
+        .list-bought input[type="checkbox"] { accent-color: var(--accent); }
+        .completed .item-name { text-decoration: line-through; color: var(--gray); }
+        .completed { background-color: #f9f9f9; opacity: 0.8; }
+        .empty-state { text-align: center; color: var(--gray); padding: 20px 10px; font-style: italic; }
 
-        .item-info {
-            flex: 1;
-            padding-right: 15px;
-            cursor: pointer;
+        /* MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: none; justify-content: center; align-items: flex-end;
         }
-        .item-cat {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--gray);
-            font-weight: 700;
-            display: block;
-            margin-bottom: 4px;
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            background: var(--bg); width: 100%; max-width: 600px;
+            height: 90vh; border-radius: 20px 20px 0 0;
+            display: flex; flex-direction: column;
+            overflow: hidden; animation: slideUp 0.3s ease-out;
         }
-        .item-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-            display: block;
-        }
-
-        /* Grosses cases à cocher tactiles */
-        .checkbox-area {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        input[type="checkbox"] {
-            width: 28px;
-            height: 28px;
-            margin: 0;
-            cursor: pointer;
-            accent-color: var(--select);
-        }
+        @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
+        .modal-header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { margin: 0; font-size: 1.2rem; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .tabs { display: flex; background: white; }
+        .tab { flex: 1; padding: 15px; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--gray); }
+        .tab.active { border-bottom-color: var(--primary); color: var(--primary); background: #f9f9f9; }
+        .modal-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         
-        .list-bought input[type="checkbox"] {
-            accent-color: var(--accent);
+        /* Styles Gestion (Communs) */
+        .mg-header-box {
+            background: white; padding: 15px; border-radius: 10px;
+            margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-
-        .completed .item-name {
-            text-decoration: line-through;
-            color: var(--gray);
-        }
-        .completed {
-            background-color: #f9f9f9;
-            opacity: 0.8;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: var(--gray);
-            padding: 30px 10px;
-            font-style: italic;
-        }
-
-        /* Modal Export/Import */
-        #fileInput { display: none; }
+        .mg-input-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .mg-actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
         
-        /* Notification Toast */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 50px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        .mg-list { list-style: none; padding: 0; }
+        .mg-item { 
+            background: white; padding: 15px; margin-bottom: 10px; 
+            border-radius: 10px; display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+            cursor: pointer; transition: background 0.2s, border 0.2s;
+            border: 2px solid transparent;
         }
+        .mg-item:hover { background: #f8f9fa; }
+        .mg-item.selected { 
+            background: var(--highlight); 
+            border-color: #f39c12; 
+        }
+
+        .btn-sm { padding: 8px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-save { background: var(--accent); color: white; }
+        .btn-save:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
+        .btn-delete { background: var(--danger); color: white; }
+        .btn-delete:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
+        .btn-cancel { background: var(--gray); color: white; }
+        
+        /* Spécifique Produits */
+        .mg-prod-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .mg-col { background: white; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .mg-col-header { padding: 10px; background: var(--light-gray); font-weight: bold; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+        .mg-list-scroll { overflow-y: auto; flex: 1; max-height: 400px; }
+        
+        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 0.9rem; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
+        #fileInput { display: none; }
     </style>
 </head>
+
 <body>
 
 <div class="container">
     <header>
         <h1>🛒 Ma Liste de Courses</h1>
-        <div class="status" id="saveStatus">Sauvegarde automatique active</div>
+        <div class="status" id="saveStatus">Prêt</div>
     </header>
 
-    <!-- Actions Globales -->
     <div class="global-actions">
+        <button class="btn btn-manage" onclick="openManageModal()">⚙️ Gestion</button>
         <button class="btn btn-outline" onclick="exportData()">💾 Sauvegarder</button>
         <button class="btn btn-outline" onclick="document.getElementById('fileInput').click()">📂 Restaurer</button>
         <input type="file" id="fileInput" accept=".json" onchange="importData(this)">
     </div>
 
-    <!-- 1. Catégories -->
+    <!-- ZONE DE SAISIE UNIQUE -->
     <div class="card">
-        <h3>1. Catégories</h3>
+        <h3>Ajouter un produit</h3>
         <div class="input-group">
-            <input type="text" id="newTitleInput" placeholder="Nouvelle catégorie (ex: Fromage)" autocapitalize="words">
-            <button class="btn btn-primary" style="width:100%" onclick="addTitle()">Ajouter Catégorie</button>
+            <input type="text" id="smartInput" placeholder="Ex: Laitiers Yaourt  ou  Fruits : Pommes" autocapitalize="words" autocomplete="off">
+            <div class="hint">Format : <strong>Catégorie</strong> + <strong>Produit</strong> (séparés par un espace ou deux-points)</div>
         </div>
         <div class="tags-cloud" id="titlesContainer"></div>
     </div>
 
-    <!-- 2. Ajout Objet -->
-    <div class="card">
-        <h3>2. Ajouter un produit</h3>
-        <div class="input-group">
-            <select id="titleSelect"></select>
-            <input type="text" id="objectInput" placeholder="Nom du produit (ex: Camembert)" autocapitalize="words">
-            <button class="btn btn-accent" style="width:100%" onclick="addItem()">➕ Ajouter à la liste</button>
-        </div>
-    </div>
-
-    <!-- 3. Liste de Préparation (À la maison) -->
+    <!-- Listes -->
     <div class="list-section">
         <div class="list-header">
             <span class="list-title">🏠 À préparer</span>
             <span class="badge" id="prepCount">0</span>
         </div>
-        <p style="font-size:0.85rem; color:#666; margin-top:-10px; margin-bottom:15px;">Cochez ce que vous voulez acheter.</p>
-        <ul id="prepList">
-            <li class="empty-state">Rien à préparer. Ajoutez des produits ci-dessus.</li>
-        </ul>
+        <ul id="prepList"><li class="empty-state">Rien à préparer.</li></ul>
     </div>
 
-    <!-- 4. Liste Magasin (À acheter / Fait) -->
     <div class="list-section">
         <div class="list-header">
             <span class="list-title" style="color:var(--select)">🛒 Au Magasin</span>
             <span class="badge active" id="shopCount">0</span>
         </div>
-        <p style="font-size:0.85rem; color:#666; margin-top:-10px; margin-bottom:15px;">Cochez quand l'objet est dans le caddie.</p>
-        <ul id="shopList" class="list-bought">
-            <li class="empty-state">Aucun objet sélectionné.</li>
-        </ul>
+        <ul id="shopList" class="list-bought"><li class="empty-state">Aucun objet sélectionné.</li></ul>
     </div>
     
     <div style="text-align:center; margin-top:20px;">
@@ -307,30 +221,88 @@
     </div>
 </div>
 
+<!-- MODAL GESTION -->
+<div class="modal-overlay" id="manageModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>⚙️ Gestion Liste</h2>
+            <button class="close-btn" onclick="closeManageModal()">&times;</button>
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('cat')">Catégories</div>
+            <div class="tab" onclick="switchTab('prod')">Produits</div>
+        </div>
+        <div class="modal-body">
+            
+            <!-- Onglet Catégories -->
+            <div id="tab-cat" class="tab-content active">
+                <div class="mg-header-box">
+                    <div class="mg-input-row">
+                        <input type="text" id="mgCatInput" placeholder="Nom de la catégorie (ou cliquez sur une catégorie ci-dessous)" style="flex:1;">
+                        <button class="btn btn-sm btn-save" id="mgCatBtn" onclick="saveCategory()">Ajouter</button>
+                    </div>
+                    <div class="mg-actions-row">
+                        <button class="btn btn-sm btn-delete" id="mgCatDelBtn" onclick="deleteSelectedCategory()" disabled>🗑️ Supprimer la sélection</button>
+                        <button class="btn btn-sm btn-cancel" id="mgCatCancelBtn" onclick="cancelCatEdit()" style="display:none;">Annuler</button>
+                    </div>
+                    <p style="font-size:0.75rem; color:#999; margin-top:8px;">Cliquez sur une catégorie dans la liste pour la charger ici.</p>
+                </div>
+                <ul class="mg-list" id="mgCatList"></ul>
+            </div>
+
+            <!-- Onglet Produits -->
+            <div id="tab-prod" class="tab-content">
+                <div class="mg-header-box">
+                    <label style="font-size:0.8rem; color:#666; display:block; margin-bottom:5px;">Filtrer par catégorie :</label>
+                    <select id="mgProdCatSelect" onchange="renderMgProducts()" style="padding:8px; width:100%; margin-bottom:10px; border:1px solid #ddd; border-radius:6px;"></select>
+                    
+                    <div class="mg-input-row">
+                        <input type="text" id="mgProdInput" placeholder="Nom du produit (ou cliquez sur un produit ci-dessous)" style="flex:1;">
+                        <button class="btn btn-sm btn-save" id="mgProdSaveBtn" onclick="saveProductFromHeader()" disabled>💾 Enregistrer</button>
+                    </div>
+                    <div class="mg-actions-row">
+                        <button class="btn btn-sm btn-delete" id="mgProdDelBtn" onclick="deleteSelectedProduct()" disabled>🗑️ Supprimer la sélection</button>
+                        <button class="btn btn-sm btn-cancel" id="mgProdCancelBtn" onclick="cancelProdEdit()" style="display:none;">Annuler</button>
+                    </div>
+                </div>
+                
+                <div class="mg-prod-grid">
+                    <div class="mg-col">
+                        <div class="mg-col-header">Liste des produits (<span id="mgProdCount">0</span>)</div>
+                        <div class="mg-list-scroll" id="mgProdList"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div id="toast">Message</div>
 
 <script>
-    // --- DONNÉES & INITIALISATION ---
+    // --- DONNÉES ---
     let titles = ["Aucun"];
     let items = [];
+    let editCatId = null; // Index de la catégorie sélectionnée/éditée
+    let editProdId = null; // ID du produit sélectionné/édité
+    let currentMgCatFilter = "Tous";
 
-    // Chargement au démarrage
+    // --- INITIALISATION ---
     window.addEventListener('DOMContentLoaded', () => {
         loadData();
         renderTitles();
-        updateSelect();
         renderLists();
+        document.getElementById('smartInput').focus();
     });
 
-    // --- SAUVEGARDE AUTOMATIQUE (LOCALSTORAGE) ---
+    // --- SAUVEGARDE ---
     function saveData() {
         localStorage.setItem('myShoppingList_titles', JSON.stringify(titles));
         localStorage.setItem('myShoppingList_items', JSON.stringify(items));
-        
         const status = document.getElementById('saveStatus');
-        status.textContent = "Sauvegardé à " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        status.style.color = "#27ae60";
-        setTimeout(() => { status.style.color = "#95a5a6"; }, 2000);
+        status.textContent = "Sauvegardé";
+        setTimeout(() => { status.textContent = "Prêt"; }, 2000);
     }
 
     function loadData() {
@@ -338,12 +310,10 @@
         const storedItems = localStorage.getItem('myShoppingList_items');
         if (storedTitles) titles = JSON.parse(storedTitles);
         if (storedItems) items = JSON.parse(storedItems);
-        
-        // Sécurité pour la catégorie "Aucun"
         if (!titles.includes("Aucun")) titles.unshift("Aucun");
     }
 
-    // --- EXPORT / IMPORT (SAUVEGARDE FICHIER) ---
+    // --- EXPORT/IMPORT ---
     function exportData() {
         const data = { titles, items, date: new Date().toISOString() };
         const blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
@@ -351,79 +321,83 @@
         const a = document.createElement('a');
         a.href = url;
         a.download = `ma_liste_courses_${new Date().toISOString().slice(0,10)}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        showToast("Liste sauvegardée dans votre téléphone !");
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        showToast("Liste sauvegardée !");
     }
 
     function importData(input) {
         const file = input.files[0];
         if (!file) return;
-        
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
                 const data = JSON.parse(e.target.result);
                 if (data.titles && data.items) {
-                    titles = data.titles;
-                    items = data.items;
-                    saveData();
-                    renderTitles();
-                    updateSelect();
-                    renderLists();
-                    showToast("Liste restaurée avec succès !");
-                } else {
-                    alert("Fichier invalide.");
+                    titles = data.titles; items = data.items;
+                    saveData(); renderTitles(); renderLists();
+                    showToast("Liste restaurée !");
                 }
-            } catch (err) {
-                alert("Erreur lors de la lecture du fichier.");
-            }
+            } catch (err) { alert("Fichier invalide."); }
         };
-        reader.readAsText(file);
-        input.value = ''; // Reset input
+        reader.readAsText(file); input.value = '';
     }
 
     function showToast(msg) {
         const x = document.getElementById("toast");
-        x.textContent = msg;
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        x.textContent = msg; x.className = "show";
+        setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
     }
 
-    // --- LOGIQUE MÉTIER ---
+    // --- LOGIQUE PRINCIPALE (SAISIE UNIQUE) ---
+    function handleSmartInput() {
+        const input = document.getElementById('smartInput');
+        const rawText = input.value.trim();
+        if (!rawText) return;
 
-    function addTitle() {
-        const input = document.getElementById('newTitleInput');
-        const val = input.value.trim();
-        if (!val) return;
-        if (titles.includes(val)) {
-            showToast("Cette catégorie existe déjà");
-            return;
+        let category = "Aucun";
+        let productName = rawText;
+        const separatorIndex = rawText.search(/[:–-]/);
+
+        if (separatorIndex > 0) {
+            category = rawText.substring(0, separatorIndex).trim();
+            productName = rawText.substring(separatorIndex + 1).trim();
+        } else {
+            const parts = rawText.split(/\s+/);
+            if (parts.length > 1) {
+                const firstWord = parts[0];
+                const existingCat = titles.find(t => t.toLowerCase() === firstWord.toLowerCase());
+                if (existingCat) {
+                    category = existingCat;
+                    productName = parts.slice(1).join(" ");
+                } else {
+                    category = firstWord;
+                    productName = parts.slice(1).join(" ");
+                }
+            }
         }
-        titles.push(val);
-        titles.sort((a, b) => a.localeCompare(b, 'fr'));
-        if (!titles.includes("Aucun")) titles.unshift("Aucun");
-        
+
+        if (!productName) { showToast("Produit manquant"); return; }
+
+        if (!titles.includes(category)) {
+            titles.push(category);
+            titles.sort((a, b) => a.localeCompare(b, 'fr'));
+            if (!titles.includes("Aucun")) titles.unshift("Aucun");
+        }
+
+        items.push({ id: Date.now(), title: category, name: productName, isReady: false, isBought: false });
         input.value = "";
-        saveData();
-        renderTitles();
-        updateSelect();
-        showToast("Catégorie ajoutée");
+        saveData(); renderTitles(); renderLists();
     }
 
     function removeTitle(title) {
-        if (title === "Aucun") {
-            showToast("Impossible de supprimer 'Aucun'");
-            return;
-        }
+        if (title === "Aucun") { showToast("Impossible de supprimer 'Aucun'"); return; }
         if (confirm(`Supprimer "${title}" ? Les objets iront dans "Aucun".`)) {
             titles = titles.filter(t => t !== title);
             items.forEach(item => { if(item.title === title) item.title = "Aucun"; });
-            saveData();
-            renderTitles();
-            updateSelect();
-            renderLists();
+            saveData(); renderTitles(); renderLists();
+            if (editCatId !== null && (!titles[editCatId] || titles[editCatId] !== title)) {
+                cancelCatEdit();
+            }
         }
     }
 
@@ -431,91 +405,31 @@
         const container = document.getElementById('titlesContainer');
         container.innerHTML = "";
         titles.forEach(t => {
-            const tag = document.createElement('div');
-            tag.className = 'tag';
-            const close = t === "Aucun" ? '' : `<span onclick="removeTitle('${t}')">&times;</span>`;
-            tag.innerHTML = `${t} ${close}`;
+            if(t === "Aucun") return;
+            const tag = document.createElement('div'); tag.className = 'tag';
+            const close = `<span onclick="removeTitle('${t}')">&times;</span>`;
+            tag.innerHTML = `${t} ${close}`; 
             container.appendChild(tag);
         });
-    }
-
-    function updateSelect() {
-        const select = document.getElementById('titleSelect');
-        const current = select.value;
-        select.innerHTML = "";
-        titles.forEach(t => {
-            const opt = document.createElement('option');
-            opt.value = t;
-            opt.textContent = t;
-            select.appendChild(opt);
-        });
-        if (titles.includes(current)) select.value = current;
-    }
-
-    function addItem() {
-        const titleSel = document.getElementById('titleSelect');
-        const objInput = document.getElementById('objectInput');
-        const name = objInput.value.trim();
-
-        if (!name) {
-            showToast("Entrez un nom de produit");
-            return;
+        if (titles.length <= 1) {
+            container.innerHTML = "<span style='font-size:0.8rem; color:#999; width:100%; text-align:center;'>Aucune catégorie créée pour le moment.</span>";
         }
-
-        items.push({
-            id: Date.now(),
-            title: titleSel.value,
-            name: name,
-            isReady: false,
-            isBought: false
-        });
-
-        objInput.value = "";
-        objInput.focus();
-        saveData();
-        renderLists();
-        showToast("Produit ajouté");
     }
 
     function toggleReady(id) {
         const item = items.find(i => i.id === id);
-        if (item) {
-            item.isReady = !item.isReady;
-            if (!item.isReady) item.isBought = false; // Reset achat si on décoche la prépa
-            saveData();
-            renderLists();
-        }
+        if (item) { item.isReady = !item.isReady; if (!item.isReady) item.isBought = false; saveData(); renderLists(); }
     }
 
     function toggleBought(id) {
         const item = items.find(i => i.id === id);
-        if (item) {
-            item.isBought = !item.isBought;
-            saveData();
-            renderLists();
-        }
+        if (item) { item.isBought = !item.isBought; saveData(); renderLists(); }
     }
 
     function clearAll() {
-        if(confirm("Tout effacer définitivement ?")) {
-            items = [];
-            titles = ["Aucun"];
-            saveData();
-            renderTitles();
-            updateSelect();
-            renderLists();
-            showToast("Liste vidée");
+        if(confirm("Tout effacer ?")) {
+            items = []; titles = ["Aucun"]; saveData(); renderTitles(); renderLists();
         }
-    }
-
-    // --- AFFICHAGE ---
-
-    function sortItems(list) {
-        return list.sort((a, b) => {
-            const t = a.title.localeCompare(b.title, 'fr');
-            if (t !== 0) return t;
-            return a.name.localeCompare(b.name, 'fr');
-        });
     }
 
     function renderLists() {
@@ -523,63 +437,306 @@
         const shopList = document.getElementById('shopList');
         const prepCount = document.getElementById('prepCount');
         const shopCount = document.getElementById('shopCount');
+        prepList.innerHTML = ""; shopList.innerHTML = "";
 
-        prepList.innerHTML = "";
-        shopList.innerHTML = "";
+        const prepItems = items.filter(i => !i.isReady).sort((a,b) => a.title.localeCompare(b.title,'fr') || a.name.localeCompare(b.name,'fr'));
+        const shopItems = items.filter(i => i.isReady && !i.isBought).sort((a,b) => a.title.localeCompare(b.title,'fr') || a.name.localeCompare(b.name,'fr'));
+        const boughtItems = items.filter(i => i.isBought).sort((a,b) => a.title.localeCompare(b.title,'fr') || a.name.localeCompare(b.name,'fr'));
 
-        const prepItems = sortItems(items.filter(i => !i.isReady));
-        const shopItems = sortItems(items.filter(i => i.isReady && !i.isBought));
-        const boughtItems = sortItems(items.filter(i => i.isBought));
-
-        // Compteurs
         prepCount.textContent = prepItems.length;
         shopCount.textContent = `${shopItems.length} à prendre / ${boughtItems.length} faits`;
 
-        // Rendu Préparation
-        if (prepItems.length === 0) {
-            prepList.innerHTML = '<li class="empty-state">Tout est sélectionné !</li>';
-        } else {
-            prepItems.forEach(item => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div class="item-info" onclick="toggleReady(${item.id})">
-                        <span class="item-cat">${item.title}</span>
-                        <span class="item-name">${item.name}</span>
-                    </div>
-                    <div class="checkbox-area">
-                        <input type="checkbox" onchange="toggleReady(${item.id})">
-                    </div>
-                `;
-                prepList.appendChild(li);
-            });
-        }
+        if (prepItems.length === 0) prepList.innerHTML = '<li class="empty-state">Tout sélectionné !</li>';
+        else prepItems.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="item-info" onclick="toggleReady(${item.id})"><span class="item-cat">${item.title}</span><span class="item-name">${item.name}</span></div><div class="checkbox-area"><input type="checkbox" onchange="toggleReady(${item.id})"></div>`;
+            prepList.appendChild(li);
+        });
 
-        // Rendu Magasin (Fusion des à acheter et faits)
         const allShop = [...shopItems, ...boughtItems];
-        if (allShop.length === 0) {
-            shopList.innerHTML = '<li class="empty-state">Cochez des cases à gauche pour les voir ici.</li>';
+        if (allShop.length === 0) shopList.innerHTML = '<li class="empty-state">Cochez à gauche.</li>';
+        else allShop.forEach(item => {
+            const li = document.createElement('li');
+            if (item.isBought) li.classList.add('completed');
+            li.innerHTML = `<div class="item-info" onclick="toggleBought(${item.id})"><span class="item-cat">${item.title}</span><span class="item-name">${item.name} ${item.isBought ? '✅' : ''}</span></div><div class="checkbox-area"><input type="checkbox" ${item.isBought ? 'checked' : ''} onchange="toggleBought(${item.id})"></div>`;
+            shopList.appendChild(li);
+        });
+    }
+
+    // --- GESTION MODALE ---
+    function openManageModal() {
+        document.getElementById('manageModal').classList.add('open');
+        renderMgCategories();
+        renderMgProducts();
+    }
+
+    function closeManageModal() {
+        document.getElementById('manageModal').classList.remove('open');
+        cancelCatEdit();
+        cancelProdEdit();
+    }
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        if (tab === 'cat') {
+            document.querySelector('.tab:nth-child(1)').classList.add('active');
+            document.getElementById('tab-cat').classList.add('active');
+            renderMgCategories();
         } else {
-            allShop.forEach(item => {
-                const li = document.createElement('li');
-                if (item.isBought) li.classList.add('completed');
-                
-                li.innerHTML = `
-                    <div class="item-info" onclick="toggleBought(${item.id})">
-                        <span class="item-cat">${item.title}</span>
-                        <span class="item-name">${item.name} ${item.isBought ? '✅' : ''}</span>
-                    </div>
-                    <div class="checkbox-area">
-                        <input type="checkbox" ${item.isBought ? 'checked' : ''} onchange="toggleBought(${item.id})">
-                    </div>
-                `;
-                shopList.appendChild(li);
-            });
+            document.querySelector('.tab:nth-child(2)').classList.add('active');
+            document.getElementById('tab-prod').classList.add('active');
+            renderMgProducts();
         }
     }
 
-    // Raccourcis clavier/mobile
-    document.getElementById('newTitleInput').addEventListener('keypress', e => { if(e.key==='Enter') addTitle(); });
-    document.getElementById('objectInput').addEventListener('keypress', e => { if(e.key==='Enter') addItem(); });
+    // --- GESTION CATÉGORIES ---
+    function renderMgCategories() {
+        const list = document.getElementById('mgCatList');
+        const input = document.getElementById('mgCatInput');
+        const btn = document.getElementById('mgCatBtn');
+        const delBtn = document.getElementById('mgCatDelBtn');
+        const cancelBtn = document.getElementById('mgCatCancelBtn');
+        
+        list.innerHTML = "";
+        
+        // État du bouton principal
+        const isEditing = editCatId !== null;
+        btn.textContent = isEditing ? "Modifier" : "Ajouter";
+        
+        // État des boutons d'action
+        delBtn.disabled = !isEditing;
+        cancelBtn.style.display = isEditing ? "inline-block" : "none";
+
+        titles.forEach((t, index) => {
+            const li = document.createElement('li'); 
+            li.className = 'mg-item';
+            if (editCatId === index) li.classList.add('selected');
+            
+            li.onclick = () => selectCategoryForEdit(index);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.style.fontWeight = "600";
+            nameSpan.textContent = t;
+            
+            li.appendChild(nameSpan);
+            list.appendChild(li);
+        });
+    }
+
+    function selectCategoryForEdit(index) {
+        editCatId = index;
+        const catName = titles[index];
+        const input = document.getElementById('mgCatInput');
+        input.value = catName;
+        input.focus();
+        input.select();
+        renderMgCategories();
+    }
+
+    function saveCategory() {
+        const input = document.getElementById('mgCatInput');
+        const val = input.value.trim();
+        if (!val) { showToast("Nom vide"); return; }
+        
+        const targetIndex = (editCatId !== null) ? editCatId : -1;
+        const exists = titles.some((t, i) => t === val && i !== targetIndex);
+        if (exists) { showToast("Déjà existant"); return; }
+
+        if (editCatId !== null) {
+            // Modification
+            const oldName = titles[editCatId];
+            titles[editCatId] = val;
+            items.forEach(item => { if(item.title === oldName) item.title = val; });
+            showToast("Catégorie modifiée");
+            cancelCatEdit();
+        } else {
+            // Ajout
+            if (titles.includes(val)) { showToast("Existe déjà"); return; }
+            titles.push(val);
+            titles.sort((a, b) => a.localeCompare(b, 'fr'));
+            if (!titles.includes("Aucun")) titles.unshift("Aucun");
+            showToast("Catégorie ajoutée");
+            input.value = "";
+        }
+
+        saveData();
+        renderMgCategories();
+        renderTitles();
+        renderLists();
+    }
+
+    function deleteSelectedCategory() {
+        if (editCatId === null) return;
+        const catName = titles[editCatId];
+        if (catName === "Aucun") {
+            showToast("Impossible de supprimer 'Aucun'");
+            return;
+        }
+        if (confirm(`Supprimer définitivement "${catName}" ?`)) {
+            titles = titles.filter(t => t !== catName);
+            items.forEach(item => { if(item.title === catName) item.title = "Aucun"; });
+            cancelCatEdit();
+            saveData();
+            renderMgCategories();
+            renderTitles();
+            renderLists();
+            showToast("Catégorie supprimée");
+        }
+    }
+
+    function cancelCatEdit() {
+        editCatId = null;
+        document.getElementById('mgCatInput').value = "";
+        renderMgCategories();
+    }
+
+    // --- GESTION PRODUITS ---
+    function renderMgProducts() {
+        const filterSelect = document.getElementById('mgProdCatSelect');
+        // Remplir le select si nécessaire
+        if (filterSelect.options.length === 0 || filterSelect.options.length !== titles.length + 1) {
+            filterSelect.innerHTML = '<option value="Tous">Toutes les catégories</option>';
+            titles.forEach(t => {
+                const opt = document.createElement('option'); opt.value = t; opt.textContent = t;
+                filterSelect.appendChild(opt);
+            });
+            if (currentMgCatFilter && titles.includes(currentMgCatFilter)) filterSelect.value = currentMgCatFilter;
+            else filterSelect.value = "Tous";
+        }
+        currentMgCatFilter = filterSelect.value;
+
+        const list = document.getElementById('mgProdList');
+        const countSpan = document.getElementById('mgProdCount');
+        const input = document.getElementById('mgProdInput');
+        const saveBtn = document.getElementById('mgProdSaveBtn');
+        const delBtn = document.getElementById('mgProdDelBtn');
+        const cancelBtn = document.getElementById('mgProdCancelBtn');
+
+        list.innerHTML = "";
+
+        let filteredItems = items;
+        if (currentMgCatFilter !== "Tous") {
+            filteredItems = items.filter(i => i.title === currentMgCatFilter);
+        }
+        filteredItems.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
+        countSpan.textContent = filteredItems.length;
+
+        // État des boutons
+        const isEditing = editProdId !== null;
+        saveBtn.disabled = !isEditing;
+        delBtn.disabled = !isEditing;
+        cancelBtn.style.display = isEditing ? "inline-block" : "none";
+        
+        if(isEditing) {
+            saveBtn.textContent = "💾 Mettre à jour";
+            saveBtn.disabled = false;
+        } else {
+            saveBtn.textContent = "💾 Enregistrer (Sélectionner d'abord)";
+            saveBtn.disabled = true;
+        }
+
+        if (filteredItems.length === 0) {
+            list.innerHTML = '<div style="padding:20px; text-align:center; color:#999;">Aucun produit.</div>';
+            return;
+        }
+
+        filteredItems.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'mg-prod-item';
+            if (editProdId === item.id) div.classList.add('selected');
+            
+            div.onclick = () => selectProductForEdit(item.id);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = item.name;
+            
+            div.appendChild(nameSpan);
+            list.appendChild(div);
+        });
+    }
+
+    function selectProductForEdit(id) {
+        editProdId = id;
+        const item = items.find(i => i.id === id);
+        if (item) {
+            const input = document.getElementById('mgProdInput');
+            input.value = item.name;
+            input.focus();
+            input.select();
+            renderMgProducts();
+        }
+    }
+
+    function saveProductFromHeader() {
+        if (editProdId === null) {
+            showToast("Veuillez sélectionner un produit dans la liste d'abord");
+            return;
+        }
+        
+        const input = document.getElementById('mgProdInput');
+        const val = input.value.trim();
+        if (!val) { showToast("Nom vide"); return; }
+
+        const item = items.find(i => i.id === editProdId);
+        if (item) {
+            item.name = val;
+            saveData();
+            // CORRECTION ICI : On rafraîchit l'affichage ET on annule la sélection
+            renderMgProducts(); 
+            renderLists();
+            showToast("Produit modifié");
+            // Optionnel : garder la sélection ou l'annuler. Ici on annule pour confirmer l'action.
+            // Si vous voulez modifier plusieurs produits à la suite, commentez la ligne ci-dessous :
+            cancelProdEdit(); 
+        }
+    }
+
+    function deleteSelectedProduct() {
+        if (editProdId === null) return;
+        const item = items.find(i => i.id === editProdId);
+        if (item && confirm(`Supprimer "${item.name}" ?`)) {
+            items = items.filter(i => i.id !== editProdId);
+            cancelProdEdit();
+            saveData();
+            renderMgProducts();
+            renderLists();
+            showToast("Produit supprimé");
+        }
+    }
+
+    function addMgProduct() {
+        const catSelect = document.getElementById('mgProdCatSelect');
+        const input = document.getElementById('mgProdInput');
+        const cat = catSelect.value;
+        const name = input.value.trim();
+
+        if (cat === "Tous") { showToast("Sélectionnez une catégorie d'abord"); return; }
+        if (!name) { showToast("Nom du produit requis"); return; }
+
+        items.push({ id: Date.now(), title: cat, name: name, isReady: false, isBought: false });
+        saveData();
+        input.value = "";
+        renderMgProducts();
+        renderLists();
+        showToast("Produit ajouté");
+    }
+
+    function cancelProdEdit() {
+        editProdId = null;
+        document.getElementById('mgProdInput').value = "";
+        renderMgProducts();
+    }
+
+    // Écouteurs
+    document.getElementById('smartInput').addEventListener('keypress', e => { if(e.key==='Enter') handleSmartInput(); });
+    document.getElementById('mgCatInput').addEventListener('keypress', e => { if(e.key==='Enter') saveCategory(); });
+    document.getElementById('mgProdInput').addEventListener('keypress', e => { 
+        if(e.key==='Enter') { 
+            if(editProdId !== null) saveProductFromHeader(); 
+            else addMgProduct(); 
+        }
+    });
 
 </script>
 
