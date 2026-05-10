@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ma Liste de Courses Mobile</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #27ae60;
+            --select: #2980b9;
+            --bg: #f4f6f7;
+            --card: #ffffff;
+            --text: #333;
+            --gray: #95a5a6;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            padding-bottom: 80px; /* Espace pour le scroll */
+        }
+
+        .container {
+            max-width: 600px; /* Largeur max style mobile même sur tablette */
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+        h1 { margin: 0; font-size: 1.5rem; color: var(--primary); }
+        .status { font-size: 0.8rem; color: var(--gray); margin-top: 5px; }
+
+        /* Boutons Globaux */
+        .global-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .btn:active { transform: scale(0.96); }
+        
+        .btn-primary { background: var(--primary); color: white; flex: 1; }
+        .btn-accent { background: var(--accent); color: white; flex: 1; }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); flex: 1; }
+        .btn-danger { background: #e74c3c; color: white; }
+
+        /* Sections de saisie */
+        .card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        h3 { margin-top: 0; font-size: 1.1rem; color: var(--primary); border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px; /* Empêche le zoom sur iPhone */
+            background: #fafafa;
+            appearance: none;
+        }
+        input:focus, select:focus {
+            border-color: var(--select);
+            outline: none;
+            background: #fff;
+        }
+
+        /* Tags Catégories */
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: #ecf0f1;
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tag span {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+            cursor: pointer;
+            padding-left: 5px;
+        }
+
+        /* Listes */
+        .list-section {
+            margin-bottom: 30px;
+        }
+        
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        .list-title { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+        .badge { background: var(--gray); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; }
+        .badge.active { background: var(--select); }
+        .badge.done { background: var(--accent); }
+
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        li {
+            background: var(--card);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+        }
+
+        .item-info {
+            flex: 1;
+            padding-right: 15px;
+            cursor: pointer;
+        }
+        .item-cat {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        /* Grosses cases à cocher tactiles */
+        .checkbox-area {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        input[type="checkbox"] {
+            width: 28px;
+            height: 28px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: var(--select);
+        }
+        
+        .list-bought input[type="checkbox"] {
+            accent-color: var(--accent);
+        }
+
+        .completed .item-name {
+            text-decoration: line-through;
+            color: var(--gray);
+        }
+        .completed {
+            background-color: #f9f9f9;
+            opacity: 0.8;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--gray);
+            padding: 30px 10px;
+            font-style: italic;
+        }
+
+        /* Modal Export/Import */
+        #fileInput { display: none; }
+        
+        /* Notification Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🛒 Ma Liste de Courses</h1>
+        <div class="status" id="saveStatus">Sauvegarde automatique active</div>
+    </header>
+
+    <!-- Actions Globales -->
+    <div class="global-actions">
+        <button class="btn btn-outline" onclick="exportData()">💾 Sauvegarder</button>
+        <button class="btn btn-outline" onclick="document.getElementById('fileInput').click()">📂 Restaurer</button>
+        <input type="file" id="fileInput" accept=".json" onchange="importData(this)">
+    </div>
+
+    <!-- 1. Catégories -->
+    <div class="card">
+        <h3>1. Catégories</h3>
+        <div class="input-group">
+            <input type="text" id="newTitleInput" placeholder="Nouvelle catégorie (ex: Fromage)" autocapitalize="words">
+            <button class="btn btn-primary" style="width:100%" onclick="addTitle()">Ajouter Catégorie</button>
+        </div>
+        <div class="tags-cloud" id="titlesContainer"></div>
+    </div>
+
+    <!-- 2. Ajout Objet -->
+    <div class="card">
+        <h3>2. Ajouter un produit</h3>
+        <div class="input-group">
+            <select id="titleSelect"></select>
+            <input type="text" id="objectInput" placeholder="Nom du produit (ex: Camembert)" autocapitalize="words">
+            <button class="btn btn-accent" style="width:100%" onclick="addItem()">➕ Ajouter à la liste</button>
+        </div>
+    </div>
+
+    <!-- 3. Liste de Préparation (À la maison) -->
+    <div class="list-section">
+        <div class="list-header">
+            <span class="list-title">🏠 À préparer</span>
+            <span class="badge" id="prepCount">0</span>
+        </div>
+        <p style="font-size:0.85rem; color:#666; margin-top:-10px; margin-bottom:15px;">Cochez ce que vous voulez acheter.</p>
+        <ul id="prepList">
+            <li class="empty-state">Rien à préparer. Ajoutez des produits ci-dessus.</li>
+        </ul>
+    </div>
+
+    <!-- 4. Liste Magasin (À acheter / Fait) -->
+    <div class="list-section">
+        <div class="list-header">
+            <span class="list-title" style="color:var(--select)">🛒 Au Magasin</span>
+            <span class="badge active" id="shopCount">0</span>
+        </div>
+        <p style="font-size:0.85rem; color:#666; margin-top:-10px; margin-bottom:15px;">Cochez quand l'objet est dans le caddie.</p>
+        <ul id="shopList" class="list-bought">
+            <li class="empty-state">Aucun objet sélectionné.</li>
+        </ul>
+    </div>
+    
+    <div style="text-align:center; margin-top:20px;">
+        <button class="btn btn-danger" onclick="clearAll()">🗑️ Tout effacer</button>
+    </div>
+</div>
+
+<div id="toast">Message</div>
+
+<script>
+    // --- DONNÉES & INITIALISATION ---
+    let titles = ["Aucun"];
+    let items = [];
+
+    // Chargement au démarrage
+    window.addEventListener('DOMContentLoaded', () => {
+        loadData();
+        renderTitles();
+        updateSelect();
+        renderLists();
+    });
+
+    // --- SAUVEGARDE AUTOMATIQUE (LOCALSTORAGE) ---
+    function saveData() {
+        localStorage.setItem('myShoppingList_titles', JSON.stringify(titles));
+        localStorage.setItem('myShoppingList_items', JSON.stringify(items));
+        
+        const status = document.getElementById('saveStatus');
+        status.textContent = "Sauvegardé à " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        status.style.color = "#27ae60";
+        setTimeout(() => { status.style.color = "#95a5a6"; }, 2000);
+    }
+
+    function loadData() {
+        const storedTitles = localStorage.getItem('myShoppingList_titles');
+        const storedItems = localStorage.getItem('myShoppingList_items');
+        if (storedTitles) titles = JSON.parse(storedTitles);
+        if (storedItems) items = JSON.parse(storedItems);
+        
+        // Sécurité pour la catégorie "Aucun"
+        if (!titles.includes("Aucun")) titles.unshift("Aucun");
+    }
+
+    // --- EXPORT / IMPORT (SAUVEGARDE FICHIER) ---
+    function exportData() {
+        const data = { titles, items, date: new Date().toISOString() };
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ma_liste_courses_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast("Liste sauvegardée dans votre téléphone !");
+    }
+
+    function importData(input) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (data.titles && data.items) {
+                    titles = data.titles;
+                    items = data.items;
+                    saveData();
+                    renderTitles();
+                    updateSelect();
+                    renderLists();
+                    showToast("Liste restaurée avec succès !");
+                } else {
+                    alert("Fichier invalide.");
+                }
+            } catch (err) {
+                alert("Erreur lors de la lecture du fichier.");
+            }
+        };
+        reader.readAsText(file);
+        input.value = ''; // Reset input
+    }
+
+    function showToast(msg) {
+        const x = document.getElementById("toast");
+        x.textContent = msg;
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+    // --- LOGIQUE MÉTIER ---
+
+    function addTitle() {
+        const input = document.getElementById('newTitleInput');
+        const val = input.value.trim();
+        if (!val) return;
+        if (titles.includes(val)) {
+            showToast("Cette catégorie existe déjà");
+            return;
+        }
+        titles.push(val);
+        titles.sort((a, b) => a.localeCompare(b, 'fr'));
+        if (!titles.includes("Aucun")) titles.unshift("Aucun");
+        
+        input.value = "";
+        saveData();
+        renderTitles();
+        updateSelect();
+        showToast("Catégorie ajoutée");
+    }
+
+    function removeTitle(title) {
+        if (title === "Aucun") {
+            showToast("Impossible de supprimer 'Aucun'");
+            return;
+        }
+        if (confirm(`Supprimer "${title}" ? Les objets iront dans "Aucun".`)) {
+            titles = titles.filter(t => t !== title);
+            items.forEach(item => { if(item.title === title) item.title = "Aucun"; });
+            saveData();
+            renderTitles();
+            updateSelect();
+            renderLists();
+        }
+    }
+
+    function renderTitles() {
+        const container = document.getElementById('titlesContainer');
+        container.innerHTML = "";
+        titles.forEach(t => {
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            const close = t === "Aucun" ? '' : `<span onclick="removeTitle('${t}')">&times;</span>`;
+            tag.innerHTML = `${t} ${close}`;
+            container.appendChild(tag);
+        });
+    }
+
+    function updateSelect() {
+        const select = document.getElementById('titleSelect');
+        const current = select.value;
+        select.innerHTML = "";
+        titles.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            select.appendChild(opt);
+        });
+        if (titles.includes(current)) select.value = current;
+    }
+
+    function addItem() {
+        const titleSel = document.getElementById('titleSelect');
+        const objInput = document.getElementById('objectInput');
+        const name = objInput.value.trim();
+
+        if (!name) {
+            showToast("Entrez un nom de produit");
+            return;
+        }
+
+        items.push({
+            id: Date.now(),
+            title: titleSel.value,
+            name: name,
+            isReady: false,
+            isBought: false
+        });
+
+        objInput.value = "";
+        objInput.focus();
+        saveData();
+        renderLists();
+        showToast("Produit ajouté");
+    }
+
+    function toggleReady(id) {
+        const item = items.find(i => i.id === id);
+        if (item) {
+            item.isReady = !item.isReady;
+            if (!item.isReady) item.isBought = false; // Reset achat si on décoche la prépa
+            saveData();
+            renderLists();
+        }
+    }
+
+    function toggleBought(id) {
+        const item = items.find(i => i.id === id);
+        if (item) {
+            item.isBought = !item.isBought;
+            saveData();
+            renderLists();
+        }
+    }
+
+    function clearAll() {
+        if(confirm("Tout effacer définitivement ?")) {
+            items = [];
+            titles = ["Aucun"];
+            saveData();
+            renderTitles();
+            updateSelect();
+            renderLists();
+            showToast("Liste vidée");
+        }
+    }
+
+    // --- AFFICHAGE ---
+
+    function sortItems(list) {
+        return list.sort((a, b) => {
+            const t = a.title.localeCompare(b.title, 'fr');
+            if (t !== 0) return t;
+            return a.name.localeCompare(b.name, 'fr');
+        });
+    }
+
+    function renderLists() {
+        const prepList = document.getElementById('prepList');
+        const shopList = document.getElementById('shopList');
+        const prepCount = document.getElementById('prepCount');
+        const shopCount = document.getElementById('shopCount');
+
+        prepList.innerHTML = "";
+        shopList.innerHTML = "";
+
+        const prepItems = sortItems(items.filter(i => !i.isReady));
+        const shopItems = sortItems(items.filter(i => i.isReady && !i.isBought));
+        const boughtItems = sortItems(items.filter(i => i.isBought));
+
+        // Compteurs
+        prepCount.textContent = prepItems.length;
+        shopCount.textContent = `${shopItems.length} à prendre / ${boughtItems.length} faits`;
+
+        // Rendu Préparation
+        if (prepItems.length === 0) {
+            prepList.innerHTML = '<li class="empty-state">Tout est sélectionné !</li>';
+        } else {
+            prepItems.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="item-info" onclick="toggleReady(${item.id})">
+                        <span class="item-cat">${item.title}</span>
+                        <span class="item-name">${item.name}</span>
+                    </div>
+                    <div class="checkbox-area">
+                        <input type="checkbox" onchange="toggleReady(${item.id})">
+                    </div>
+                `;
+                prepList.appendChild(li);
+            });
+        }
+
+        // Rendu Magasin (Fusion des à acheter et faits)
+        const allShop = [...shopItems, ...boughtItems];
+        if (allShop.length === 0) {
+            shopList.innerHTML = '<li class="empty-state">Cochez des cases à gauche pour les voir ici.</li>';
+        } else {
+            allShop.forEach(item => {
+                const li = document.createElement('li');
+                if (item.isBought) li.classList.add('completed');
+                
+                li.innerHTML = `
+                    <div class="item-info" onclick="toggleBought(${item.id})">
+                        <span class="item-cat">${item.title}</span>
+                        <span class="item-name">${item.name} ${item.isBought ? '✅' : ''}</span>
+                    </div>
+                    <div class="checkbox-area">
+                        <input type="checkbox" ${item.isBought ? 'checked' : ''} onchange="toggleBought(${item.id})">
+                    </div>
+                `;
+                shopList.appendChild(li);
+            });
+        }
+    }
+
+    // Raccourcis clavier/mobile
+    document.getElementById('newTitleInput').addEventListener('keypress', e => { if(e.key==='Enter') addTitle(); });
+    document.getElementById('objectInput').addEventListener('keypress', e => { if(e.key==='Enter') addItem(); });
+
+</script>
+
+</body>
+</html>
