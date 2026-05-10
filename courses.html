@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ma Liste de Courses - Épurée</title>
+    <title>Ma Liste de Courses - Compacte</title>
     <style>
         :root {
             --primary: #2c3e50;
             --accent: #27ae60;
             --select: #2980b9;
+            --buy: #e67e22;
             --danger: #e74c3c;
             --bg: #f4f6f7;
             --card: #ffffff;
@@ -26,56 +27,57 @@
             margin: 0;
             padding: 0;
             color: var(--text);
+            font-size: 14px; /* Base réduite */
         }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .container { max-width: 600px; margin: 0 auto; padding: 15px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
-        header { text-align: center; margin-bottom: 40px; }
-        h1 { margin: 0; font-size: 2rem; color: var(--primary); }
-        .subtitle { font-size: 0.9rem; color: var(--gray); margin-top: 10px; }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { margin: 0; font-size: 1.8rem; color: var(--primary); }
+        .subtitle { font-size: 0.8rem; color: var(--gray); margin-top: 5px; }
 
         /* Grille de boutons principale */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .btn-large {
-            border: none; padding: 25px 20px; border-radius: 15px;
-            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            border: none; padding: 15px 10px; border-radius: 12px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
             transition: transform 0.1s, box-shadow 0.1s;
             color: white;
         }
         .btn-large:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .btn-prepare { background: var(--select); }
+        .btn-buy { background: var(--buy); grid-column: span 2; }
         .btn-manage { background: #8e44ad; }
         
-        .btn-icon { font-size: 2.5rem; }
+        .btn-icon { font-size: 2rem; }
 
-        /* Boutons secondaires (Sauvegarde) */
         .secondary-actions {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .btn-small {
             background: white; border: 2px solid var(--primary); color: var(--primary);
-            padding: 10px 20px; border-radius: 50px;
-            font-size: 0.9rem; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 8px;
+            padding: 8px 15px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .btn-small:active { transform: scale(0.96); }
 
-        /* MODALS (Gestion & Préparer) */
+        /* MODALS */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5); z-index: 1000;
@@ -94,67 +96,154 @@
 
         .modal-header { 
             background: var(--primary); color: white; 
-            padding: 15px 20px; 
+            padding: 10px 15px; 
             display: flex; justify-content: space-between; align-items: center; 
             flex-shrink: 0;
         }
-        .modal-header h2 { margin: 0; font-size: 1.2rem; }
-        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .modal-header h2 { margin: 0; font-size: 1.1rem; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0 5px; }
         
         .tabs { display: flex; background: white; flex-shrink: 0; }
-        .tab { flex: 1; padding: 15px; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--gray); }
+        .tab { flex: 1; padding: 10px; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--gray); font-size: 0.9rem; }
         .tab.active { border-bottom-color: var(--primary); color: var(--primary); background: #f9f9f9; }
         
-        .modal-body { flex: 1; overflow-y: auto; padding: 20px; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .modal-body { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; }
+        .tab-content { display: none; flex-direction: column; height: 100%; }
+        .tab-content.active { display: flex; }
         
         .mg-header-box {
-            background: white; padding: 15px; border-radius: 10px;
-            margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: white; padding: 10px; border-radius: 8px;
+            margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             position: sticky; top: 0; z-index: 10;
         }
-        .mg-input-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .mg-actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        .mg-input-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .mg-actions-row { display: flex; gap: 8px; flex-wrap: wrap; }
         
-        .mg-list { list-style: none; padding: 0; }
-        .mg-item { 
-            background: white; padding: 10px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
-            cursor: pointer; transition: background 0.2s, border 0.2s;
-            border: 2px solid transparent;
-            font-size: 0.95rem;
+        /* LISTES COMPACTES (GLOBAL) */
+        .mg-list, .prep-list-wrapper, .buy-list-wrapper {
+            padding: 0; margin: 0;
         }
-        .mg-item:hover { background: #f8f9fa; }
+
+        .mg-item, .prep-item { 
+            background: white; 
+            padding: 6px 10px; /* Très réduit */
+            margin-bottom: 4px; /* Très réduit */
+            border-radius: 6px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+            cursor: pointer; 
+            transition: background 0.2s, border 0.2s;
+            border: 1px solid transparent;
+            font-size: 0.85rem; /* Texte plus petit */
+        }
+        
+        .mg-item:hover, .prep-item:hover { background: #f8f9fa; }
         .mg-item.selected { background: var(--highlight); border-color: #f39c12; }
 
-        .btn-sm { padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; flex: 1; }
+        .btn-sm { padding: 4px 8px; font-size: 0.7rem; border-radius: 4px; border: none; cursor: pointer; font-weight: 600; flex: 1; }
         .btn-save { background: var(--accent); color: white; }
         .btn-save:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
         .btn-delete { background: var(--danger); color: white; }
         .btn-delete:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
         .btn-add { background: var(--primary); color: white; }
         
-        .mg-prod-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .mg-col { background: white; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .mg-col-header { padding: 10px; background: var(--light-gray); font-weight: bold; font-size: 0.9rem; border-bottom: 1px solid #eee; }
-        .mg-list-scroll { overflow-y: auto; flex: 1; max-height: 400px; }
+        .mg-prod-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .mg-col { background: white; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .mg-col-header { padding: 6px 10px; background: var(--light-gray); font-weight: bold; font-size: 0.8rem; border-bottom: 1px solid #eee; }
+        .mg-list-scroll { overflow-y: auto; flex: 1; max-height: 300px; }
         
-        /* Style liste Préparation */
-        .prep-item {
-            background: white; padding: 12px 15px; margin-bottom: 8px;
-            border-radius: 8px; display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        /* Style spécifique Préparation & Achats */
+        .prep-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 10px;
         }
-        .prep-info { flex: 1; }
-        .prep-cat { font-size: 0.7rem; text-transform: uppercase; color: var(--gray); font-weight: 700; display: block; }
-        .prep-name { font-size: 1rem; font-weight: 500; }
-        .prep-check input { width: 24px; height: 24px; accent-color: var(--select); }
+        
+        .prep-filter-box {
+            background: white;
+            padding: 8px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+        
+        .prep-filter-select {
+            width: 100%;
+            padding: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+            margin-bottom: 5px;
+        }
+        
+        .prep-list-wrapper, .buy-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
 
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 0.9rem; }
+        .prep-item {
+            /* Hérite de .prep-item global pour la compacité */
+            gap: 8px;
+        }
+        
+        .prep-info { flex: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+        .prep-cat { 
+            font-size: 0.6rem; 
+            text-transform: uppercase; 
+            color: var(--gray); 
+            font-weight: 700; 
+            display: block; 
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .prep-name { 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .prep-check input { 
+            width: 18px; 
+            height: 18px; 
+            accent-color: var(--select); 
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        /* Style spécifique Achats */
+        .buy-section {
+            background: white;
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .buy-section h3 {
+            margin: 0 0 8px 0;
+            font-size: 0.85rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 4px;
+        }
+        .buy-item-checked .prep-name {
+            font-weight: 700;
+            color: var(--buy);
+        }
+
+        #toast { visibility: hidden; min-width: 200px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 12px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 0.8rem; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
@@ -167,24 +256,28 @@
 <div class="container">
     <header>
         <h1>🛒 Ma Liste</h1>
-        <div class="subtitle">Gestion simple et efficace</div>
+        <div class="subtitle">Gestion compacte</div>
     </header>
 
-    <!-- Grille Principale -->
     <div class="main-grid">
         <button class="btn-large btn-prepare" onclick="openPrepareModal()">
             <span class="btn-icon">📝</span>
             <span>Préparer</span>
         </button>
+        
+        <button class="btn-large btn-buy" onclick="openBuyModal()">
+            <span class="btn-icon">🛒</span>
+            <span>Achats</span>
+        </button>
+
         <button class="btn-large btn-manage" onclick="openManageModal()">
             <span class="btn-icon">⚙️</span>
             <span>Gestion</span>
         </button>
     </div>
 
-    <!-- Actions Secondaires -->
     <div class="secondary-actions">
-        <button class="btn-small" onclick="exportData()">💾 Sauvegarder (JSON)</button>
+        <button class="btn-small" onclick="exportData()">💾 Sauvegarder</button>
         <button class="btn-small" onclick="document.getElementById('fileInput').click()">📂 Restaurer</button>
         <input type="file" id="fileInput" accept=".json" onchange="importData(this)">
     </div>
@@ -194,7 +287,7 @@
 <div class="modal-overlay" id="manageModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>⚙️ Gestion Liste</h2>
+            <h2>⚙️ Gestion</h2>
             <button class="close-btn" onclick="closeManageModal()">&times;</button>
         </div>
         <div class="tabs">
@@ -203,41 +296,38 @@
         </div>
         <div class="modal-body">
             
-            <!-- Onglet Catégories -->
             <div id="tab-cat" class="tab-content active">
                 <div class="mg-header-box">
                     <div class="mg-input-row">
-                        <input type="text" id="mgCatInput" placeholder="Nom de la catégorie" style="flex:1;">
+                        <input type="text" id="mgCatInput" placeholder="Nom catégorie" style="flex:1; font-size:0.9rem; padding:6px;">
                         <button class="btn btn-sm btn-save" id="mgCatBtn" onclick="saveCategory()">Ajouter</button>
                     </div>
                     <div class="mg-actions-row">
-                        <button class="btn btn-sm btn-delete" id="mgCatDelBtn" onclick="deleteSelectedCategory()" disabled>🗑️ Supprimer</button>
+                        <button class="btn btn-sm btn-delete" id="mgCatDelBtn" onclick="deleteSelectedCategory()" disabled>🗑️</button>
                         <button class="btn btn-sm btn-cancel" id="mgCatCancelBtn" onclick="cancelCatEdit()" style="display:none;">Annuler</button>
                     </div>
-                    <p style="font-size:0.75rem; color:#999; margin-top:8px;">Cliquez sur une catégorie ci-dessous pour la modifier.</p>
                 </div>
                 <ul class="mg-list" id="mgCatList"></ul>
             </div>
 
-            <!-- Onglet Produits -->
             <div id="tab-prod" class="tab-content">
                 <div class="mg-header-box" style="border: 2px solid var(--primary);">
-                    <label style="font-size:0.8rem; color:#666; display:block; margin-bottom:5px;">Catégorie :</label>
-                    <select id="mgProdCatSelect" onchange="onCategoryChange()" style="padding:8px; width:100%; margin-bottom:10px; border:1px solid #ddd; border-radius:6px;"></select>
+                    <label style="font-size:0.7rem; color:#666; display:block; margin-bottom:2px;">Catégorie :</label>
+                    <select id="mgProdCatSelect" onchange="onCategoryChange()" style="padding:6px; width:100%; margin-bottom:8px; border:1px solid #ddd; border-radius:4px; font-size:0.9rem;"></select>
                     
                     <div class="mg-input-row">
-                        <input type="text" id="mgProdInput" placeholder="Nom du produit" style="flex:1; font-size:1rem; padding:12px;">
-                        <button class="btn btn-sm btn-add" id="mgProdActionBtn" onclick="handleProdAction()">➕ Ajouter</button>
+                        <input type="text" id="mgProdInput" placeholder="Nom produit" style="flex:1; font-size:0.9rem; padding:6px;">
+                        <button class="btn btn-sm btn-add" id="mgProdActionBtn" onclick="handleProdAction()">➕</button>
                     </div>
                     <div class="mg-actions-row">
-                        <button class="btn btn-sm btn-delete" id="mgProdDelBtn" onclick="deleteSelectedProduct()" disabled>🗑️ Supprimer</button>
+                        <button class="btn btn-sm btn-delete" id="mgProdDelBtn" onclick="deleteSelectedProduct()" disabled>🗑️</button>
                         <button class="btn btn-sm btn-cancel" id="mgProdCancelBtn" onclick="cancelProdEdit()" style="display:none;">Annuler</button>
                     </div>
                 </div>
                 
                 <div class="mg-prod-grid">
                     <div class="mg-col">
-                        <div class="mg-col-header">Liste des produits (<span id="mgProdCount">0</span>)</div>
+                        <div class="mg-col-header">Produits (<span id="mgProdCount">0</span>)</div>
                         <div class="mg-list-scroll" id="mgProdList"></div>
                     </div>
                 </div>
@@ -251,17 +341,43 @@
 <div class="modal-overlay" id="prepareModal">
     <div class="modal-content">
         <div class="modal-header" style="background: var(--select);">
-            <h2>📝 Préparer les achats</h2>
+            <h2>📝 Préparer</h2>
             <button class="close-btn" onclick="closePrepareModal()">&times;</button>
         </div>
         <div class="modal-body">
-            <div class="mg-header-box" style="text-align: center;">
-                <p style="margin:0; font-size:0.9rem; color:#666;">Cochez les articles à acheter.</p>
-                <div style="margin-top:10px; font-weight:bold; color:var(--primary);">
-                    <span id="prepCounter">0</span> articles prêts
+            <div class="prep-container">
+                <div class="prep-filter-box">
+                    <select id="prepCategoryFilter" class="prep-filter-select" onchange="renderPrepareList()">
+                        <option value="Tous">Toutes catégories</option>
+                    </select>
+                    <div style="font-weight:bold; color:var(--primary); text-align:center; font-size:0.8rem;">
+                        Prêts : <span id="prepCounter">0</span>
+                    </div>
+                </div>
+                <div class="prep-list-wrapper" id="prepareListContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ACHATS -->
+<div class="modal-overlay" id="buyModal">
+    <div class="modal-content">
+        <div class="modal-header" style="background: var(--buy);">
+            <h2>🛒 Achats</h2>
+            <button class="close-btn" onclick="closeBuyModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="prep-container">
+                <div class="buy-section">
+                    <h3>À prendre (Cochez pour valider)</h3>
+                    <div class="buy-list-wrapper" id="buyTopList"></div>
+                </div>
+                <div class="buy-section" style="border: 2px solid var(--buy);">
+                    <h3 style="color: var(--buy);">Panier (Décochez pour retirer)</h3>
+                    <div class="buy-list-wrapper" id="buyBottomList"></div>
                 </div>
             </div>
-            <div id="prepareListContainer"></div>
         </div>
     </div>
 </div>
@@ -269,19 +385,16 @@
 <div id="toast">Message</div>
 
 <script>
-    // --- DONNÉES ---
     let titles = ["Aucun"];
     let items = [];
     let editCatId = null; 
     let editProdId = null; 
     let currentMgCatFilter = "Tous";
 
-    // --- INITIALISATION ---
     window.addEventListener('DOMContentLoaded', () => {
         loadData();
     });
 
-    // --- SAUVEGARDE ---
     function saveData() {
         localStorage.setItem('myShoppingList_titles', JSON.stringify(titles));
         localStorage.setItem('myShoppingList_items', JSON.stringify(items));
@@ -295,16 +408,15 @@
         if (!titles.includes("Aucun")) titles.unshift("Aucun");
     }
 
-    // --- EXPORT/IMPORT ---
     function exportData() {
         const data = { titles, items, date: new Date().toISOString() };
         const blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `ma_liste_courses_${new Date().toISOString().slice(0,10)}.json`;
+        a.download = `liste_courses_${new Date().toISOString().slice(0,10)}.json`;
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        showToast("Liste sauvegardée !");
+        showToast("Sauvegardé !");
     }
 
     function importData(input) {
@@ -317,7 +429,7 @@
                 if (data.titles && data.items) {
                     titles = data.titles; items = data.items;
                     saveData();
-                    showToast("Liste restaurée !");
+                    showToast("Restauré !");
                 }
             } catch (err) { alert("Fichier invalide."); }
         };
@@ -327,17 +439,10 @@
     function showToast(msg) {
         const x = document.getElementById("toast");
         x.textContent = msg; x.className = "show";
-        setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+        setTimeout(() => { x.className = x.className.replace("show", ""); }, 2000);
     }
 
-    function clearAll() {
-        if(confirm("Tout effacer ?")) {
-            items = []; titles = ["Aucun"]; saveData();
-            showToast("Liste vidée");
-        }
-    }
-
-    // --- GESTION MODALE ---
+    // --- GESTION ---
     function openManageModal() {
         document.getElementById('manageModal').classList.add('open');
         renderMgCategories();
@@ -364,7 +469,6 @@
         }
     }
 
-    // --- GESTION CATÉGORIES ---
     function renderMgCategories() {
         const list = document.getElementById('mgCatList');
         const input = document.getElementById('mgCatInput');
@@ -442,7 +546,6 @@
         renderMgCategories();
     }
 
-    // --- GESTION PRODUITS ---
     function onCategoryChange() {
         currentMgCatFilter = document.getElementById('mgProdCatSelect').value;
         renderMgProducts(false);
@@ -473,7 +576,7 @@
 
         list.innerHTML = "";
         const isEditing = editProdId !== null;
-        actionBtn.textContent = isEditing ? "💾 Modifier" : "➕ Ajouter";
+        actionBtn.textContent = isEditing ? "💾 Modifier" : "➕";
         actionBtn.className = isEditing ? "btn btn-sm btn-save" : "btn btn-sm btn-add";
         delBtn.disabled = !isEditing;
         cancelBtn.style.display = isEditing ? "inline-block" : "none";
@@ -483,18 +586,18 @@
         filtered.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
 
         if (filtered.length === 0) {
-            list.innerHTML = '<div style="padding:20px; text-align:center; color:#999;">Aucun produit.</div>';
+            list.innerHTML = '<div style="padding:15px; text-align:center; color:#999; font-size:0.8rem;">Aucun produit.</div>';
             return;
         }
 
         filtered.forEach(item => {
             const div = document.createElement('div');
-            div.style.padding = "12px 15px";
+            div.style.padding = "8px 10px";
             div.style.borderBottom = "1px solid #f1f1f1";
             div.style.cursor = "pointer";
             if (editProdId === item.id) div.style.background = "#fff3cd";
             div.onclick = () => selectProductForEdit(item.id);
-            div.innerHTML = `<span>${item.name}</span>`;
+            div.innerHTML = `<span style="font-size:0.85rem;">${item.name}</span>`;
             list.appendChild(div);
         });
     }
@@ -517,7 +620,7 @@
         const val = input.value.trim();
         const cat = select.value;
 
-        if (!val || cat === "Tous") { showToast("Remplissez les champs"); return; }
+        if (!val || cat === "Tous") { showToast("Champs requis"); return; }
 
         if (editProdId !== null) {
             const item = items.find(i => i.id === editProdId);
@@ -544,34 +647,23 @@
         renderMgProducts(false);
     }
 
-    // --- PRÉPARER ---
+    // --- PRÉPARER (CORRIGÉ) ---
     function openPrepareModal() {
         const modal = document.getElementById('prepareModal');
-        const container = document.getElementById('prepareListContainer');
-        const counter = document.getElementById('prepCounter');
-        container.innerHTML = "";
-        let readyCount = 0;
+        const filterSelect = document.getElementById('prepCategoryFilter');
+        
+        // Remplir le filtre
+        filterSelect.innerHTML = '<option value="Tous">Toutes catégories</option>';
+        titles.forEach(t => {
+            if(t !== "Aucun") {
+                const opt = document.createElement('option'); 
+                opt.value = t; 
+                opt.textContent = t;
+                filterSelect.appendChild(opt);
+            }
+        });
 
-        const sorted = [...items].sort((a,b) => (a.isReady === b.isReady) ? 0 : a.isReady ? 1 : -1);
-
-        if (sorted.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:40px; color:#999;">Liste vide. Allez dans Gestion pour ajouter.</div>';
-        } else {
-            sorted.forEach(item => {
-                if (item.isReady) readyCount++;
-                const div = document.createElement('div');
-                div.className = 'prep-item';
-                div.innerHTML = `
-                    <div class="prep-check"><input type="checkbox" ${item.isReady ? 'checked' : ''} onchange="toggleReady(${item.id})"></div>
-                    <div class="prep-info">
-                        <span class="prep-cat">${item.title}</span>
-                        <span class="prep-name" style="${item.isReady ? 'text-decoration:line-through; color:#999;' : ''}">${item.name}</span>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-        counter.textContent = readyCount;
+        renderPrepareList();
         modal.classList.add('open');
     }
 
@@ -580,12 +672,140 @@
         saveData();
     }
 
+
+    function renderPrepareList() {
+        const container = document.getElementById('prepareListContainer');
+        const counter = document.getElementById('prepCounter');
+        const filterVal = document.getElementById('prepCategoryFilter').value;
+        
+        container.innerHTML = "";
+        
+        // 1. On part de TOUS les éléments (et non plus seulement les isReady)
+        let filteredItems = items; 
+        
+        // 2. On applique le filtre catégorie si nécessaire
+        if (filterVal !== "Tous") {
+            filteredItems = filteredItems.filter(i => i.title === filterVal);
+        }
+
+        // 3. Tri : Les éléments "Prêts" apparaissent en bas (ou en haut selon préférence)
+        // Ici, on met les non-prêts en haut pour les traiter en premier
+        filteredItems.sort((a,b) => {
+            if (a.isReady === b.isReady) return a.name.localeCompare(b.name, 'fr');
+            return a.isReady ? 1 : -1; 
+        });
+
+        // Le compteur affiche maintenant le nombre total d'éléments dans la vue
+        counter.textContent = filteredItems.length;
+
+        if (filteredItems.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:30px; color:#999; font-size:0.8rem;">Aucun article.<br>Allez dans Gestion > Produits pour ajouter.</div>';
+        } else {
+            filteredItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'prep-item';
+                // Optionnel : réduire l'opacité si déjà prêt pour bien voir la différence
+                if(item.isReady) { 
+                    div.style.opacity = "0.6"; 
+                    div.style.background = "#e8f8f5"; // Fond vert très clair pour indiquer "OK"
+                }
+                
+                div.innerHTML = `
+                    <div class="prep-check">
+                        <input type="checkbox" ${item.isReady ? 'checked' : ''} onclick="event.stopPropagation(); toggleReady(${item.id})">
+                    </div>
+                    <div class="prep-info">
+                        <span class="prep-cat">${item.title}</span>
+                        <span class="prep-name" style="${item.isReady ? 'text-decoration:line-through; color:#27ae60;' : ''}">${item.name}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+    }
+
+
     function toggleReady(id) {
         const item = items.find(i => i.id === id);
         if (item) {
             item.isReady = !item.isReady;
-            const counter = document.getElementById('prepCounter');
-            counter.textContent = parseInt(counter.textContent) + (item.isReady ? 1 : -1);
+            if (!item.isReady) item.isBought = false;
+            saveData();
+            renderPrepareList();
+        }
+    }
+
+    // --- ACHATS ---
+    function openBuyModal() {
+        const modal = document.getElementById('buyModal');
+        renderBuyLists();
+        modal.classList.add('open');
+    }
+
+    function closeBuyModal() {
+        document.getElementById('buyModal').classList.remove('open');
+        saveData();
+    }
+
+    function renderBuyLists() {
+        const topList = document.getElementById('buyTopList');
+        const bottomList = document.getElementById('buyBottomList');
+        
+        topList.innerHTML = "";
+        bottomList.innerHTML = "";
+
+        const readyItems = items.filter(i => i.isReady === true);
+        const toBuy = readyItems.filter(i => i.isBought === false);
+        const inCart = readyItems.filter(i => i.isBought === true);
+
+        toBuy.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
+        inCart.sort((a,b) => a.name.localeCompare(b.name, 'fr'));
+
+        if (toBuy.length === 0) {
+            topList.innerHTML = '<div style="padding:10px; color:#999; font-size:0.8rem; font-style:italic;">Rien à prendre.</div>';
+        } else {
+            toBuy.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'prep-item';
+                div.innerHTML = `
+                    <div class="prep-check">
+                        <input type="checkbox" onclick="event.stopPropagation(); toggleBuyStatus(${item.id}, true)">
+                    </div>
+                    <div class="prep-info">
+                        <span class="prep-cat">${item.title}</span>
+                        <span class="prep-name">${item.name}</span>
+                    </div>
+                `;
+                topList.appendChild(div);
+            });
+        }
+
+        if (inCart.length === 0) {
+            bottomList.innerHTML = '<div style="padding:10px; color:#999; font-size:0.8rem; font-style:italic;">Panier vide.</div>';
+        } else {
+            inCart.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'prep-item buy-item-checked';
+                div.innerHTML = `
+                    <div class="prep-check">
+                        <input type="checkbox" checked onclick="event.stopPropagation(); toggleBuyStatus(${item.id}, false)">
+                    </div>
+                    <div class="prep-info">
+                        <span class="prep-cat">${item.title}</span>
+                        <span class="prep-name">${item.name}</span>
+                    </div>
+                `;
+                bottomList.appendChild(div);
+            });
+        }
+    }
+
+    function toggleBuyStatus(id, moveToCart) {
+        const item = items.find(i => i.id === id);
+        if (item) {
+            item.isBought = moveToCart;
+            saveData();
+            renderBuyLists();
         }
     }
 
