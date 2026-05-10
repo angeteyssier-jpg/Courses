@@ -1,0 +1,347 @@
+{
+  "titles": [
+    "Aucun",
+    "Boissons",
+    "Condiments",
+    "Entretien",
+    "Fromages",
+    "Fruits",
+    "Laiterie",
+    "Légumes",
+    "Légumes en boite",
+    "Poissons",
+    "Viandes"
+  ],
+  "items": [
+    {
+      "id": 1778436943205,
+      "title": "Légumes",
+      "name": "Ail",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437404745,
+      "title": "Légumes",
+      "name": "Avocats",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437381506,
+      "title": "Fruits",
+      "name": "Bananes",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437464887,
+      "title": "Laiterie",
+      "name": "Beurre",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437900165,
+      "title": "Boissons",
+      "name": "Bières",
+      "isReady": true,
+      "isBought": true
+    },
+    {
+      "id": 1778436019020,
+      "title": "Boissons",
+      "name": "Blanc",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778434683894,
+      "title": "Fromages",
+      "name": "Camembert",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437506574,
+      "title": "Condiments",
+      "name": "Câpres",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778436029172,
+      "title": "Boissons",
+      "name": "Champagne",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437569245,
+      "title": "Fruits",
+      "name": "Citrons",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437928643,
+      "title": "Boissons",
+      "name": "Coca zéro",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438335234,
+      "title": "Entretien",
+      "name": "Colle Forte",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778434673862,
+      "title": "Fromages",
+      "name": "Conté",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438604796,
+      "title": "Condiments",
+      "name": "Cornichons",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438433207,
+      "title": "Fromages",
+      "name": "Coulommiers",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437475063,
+      "title": "Laiterie",
+      "name": "Crème Fraiche",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438369729,
+      "title": "Entretien",
+      "name": "Désodorisant Voiture",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437955979,
+      "title": "Boissons",
+      "name": "Eau Gazeuse",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437945860,
+      "title": "Boissons",
+      "name": "Eau Minérale",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438234540,
+      "title": "Légumes",
+      "name": "Echalotes",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438407952,
+      "title": "Fromages",
+      "name": "Emmental",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438419370,
+      "title": "Fromages",
+      "name": "Emmental rapé",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438285603,
+      "title": "Entretien",
+      "name": "Eponges",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437918676,
+      "title": "Boissons",
+      "name": "Fanta Citron",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437521318,
+      "title": "Légumes",
+      "name": "Frisée",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438456407,
+      "title": "Fruits",
+      "name": "Fruits",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438519662,
+      "title": "Légumes",
+      "name": "Légumes",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438568804,
+      "title": "Légumes en boite",
+      "name": "Maïs",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438660369,
+      "title": "Condiments",
+      "name": "Moutarde forte",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438671601,
+      "title": "Condiments",
+      "name": "Moutarde Savora",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437111201,
+      "title": "Légumes",
+      "name": "Oignons",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437530064,
+      "title": "Légumes",
+      "name": "Pommes de Terre",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438394824,
+      "title": "Fromages",
+      "name": "Roquefort",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778436023140,
+      "title": "Boissons",
+      "name": "Rosé",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778436014124,
+      "title": "Boissons",
+      "name": "Rouge",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778437513230,
+      "title": "Légumes",
+      "name": "Salade",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438771590,
+      "title": "Poissons",
+      "name": "Saumon",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438783519,
+      "title": "Poissons",
+      "name": "Thon en boite",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438795262,
+      "title": "Poissons",
+      "name": "Sardines en boite",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438814861,
+      "title": "Poissons",
+      "name": "Blanc",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438849901,
+      "title": "Viandes",
+      "name": "Poulet Roti",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438880995,
+      "title": "Viandes",
+      "name": "Poulet (Blancs de)",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438908387,
+      "title": "Entretien",
+      "name": "P.Q.",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438926820,
+      "title": "Entretien",
+      "name": "Produit chiottes cuvettes",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438951554,
+      "title": "Entretien",
+      "name": "Produit vaiselle",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778438968865,
+      "title": "Entretien",
+      "name": "Produit Lave-vaiselle",
+      "isReady": false,
+      "isBought": false
+    },
+    {
+      "id": 1778439009088,
+      "title": "Boissons",
+      "name": "Ricard",
+      "isReady": false,
+      "isBought": false
+    }
+  ],
+  "date": "2026-05-10T18:53:36.228Z"
+}
