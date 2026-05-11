@@ -27,10 +27,11 @@
             margin: 0;
             padding: 0;
             color: var(--text);
-            font-size: 14px;
+            font-size: 13px; /* Réduit de 14px à 13px pour gagner de la place */
             height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow: hidden; /* Empêche le scroll global sur mobile */
         }
 
         /* --- ÉCRAN D'ACCUEIL --- */
@@ -39,80 +40,82 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            padding: 20px 15px;
+            padding: 10px 15px; /* Padding réduit */
             max-width: 600px;
             margin: 0 auto;
             width: 100%;
+            overflow-y: auto; /* Permet le scroll si l'écran est très petit */
         }
 
         header { 
             text-align: center; 
-            margin-top: 40px; /* Plus haut */
-            margin-bottom: 40px; 
+            margin-top: 20px; /* Plus haut mais moins de marge */
+            margin-bottom: 25px; 
             width: 100%;
         }
-        h1 { margin: 0; font-size: 2.2rem; color: var(--primary); }
-        .subtitle { font-size: 0.9rem; color: var(--gray); margin-top: 5px; }
+        h1 { margin: 0; font-size: 1.8rem; color: var(--primary); }
+        .subtitle { font-size: 0.85rem; color: var(--gray); margin-top: 4px; }
 
         /* Grille du haut : 2 boutons côte à côte */
         .top-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px; /* Gap réduit */
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .btn-large {
-            border: none; padding: 20px 10px; border-radius: 15px;
-            font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            border: none; padding: 15px 5px; /* Padding vertical réduit */
+            border-radius: 12px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
             transition: transform 0.1s, box-shadow 0.1s;
             color: white;
-            aspect-ratio: 1/1; /* Carrés parfaits */
+            aspect-ratio: 1/1;
         }
-        .btn-large:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn-large:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .btn-prepare { background: var(--select); }
         .btn-buy { background: var(--buy); }
         
-        .btn-icon { font-size: 2.5rem; }
+        .btn-icon { font-size: 2.2rem; /* Icône légèrement réduite */ }
 
         /* Bouton Gestion centré plus petit */
         .middle-section {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .btn-manage { 
             background: #8e44ad; 
-            padding: 12px 30px; 
+            padding: 10px 25px; 
             border-radius: 50px; 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             aspect-ratio: auto;
             width: auto;
-            min-width: 160px;
+            min-width: 140px;
         }
 
         /* Boutons bas */
         .bottom-actions {
-            margin-top: auto; /* Pousse vers le bas */
+            margin-top: auto;
             display: flex;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
             width: 100%;
-            padding-bottom: 20px;
+            padding-bottom: 10px;
         }
 
         .btn-small {
             background: white; border: 2px solid var(--primary); color: var(--primary);
-            padding: 10px 20px; border-radius: 50px;
-            font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .btn-small:active { transform: scale(0.96); }
@@ -136,21 +139,22 @@
 
         .modal-header { 
             background: var(--primary); color: white; 
-            padding: 12px 15px; 
+            padding: 10px 15px; /* Header réduit */
             display: flex; justify-content: space-between; align-items: center; 
             flex-shrink: 0;
+            min-height: 50px;
         }
-        .modal-header h2 { margin: 0; font-size: 1.2rem; }
-        .close-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; padding: 0 5px; }
+        .modal-header h2 { margin: 0; font-size: 1.1rem; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.6rem; cursor: pointer; padding: 0 5px; line-height: 1; }
         
         .tabs { display: flex; background: white; flex-shrink: 0; }
-        .tab { flex: 1; padding: 12px; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--gray); font-size: 0.95rem; }
+        .tab { flex: 1; padding: 10px; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--gray); font-size: 0.9rem; }
         .tab.active { border-bottom-color: var(--primary); color: var(--primary); background: #f9f9f9; }
         
         .modal-body { 
             flex: 1; 
-            overflow: hidden; /* Important pour la gestion interne du scroll */
-            padding: 10px; 
+            overflow: hidden;
+            padding: 8px; /* Padding réduit */
             display: flex; 
             flex-direction: column; 
             position: relative;
@@ -159,40 +163,40 @@
         .tab-content { display: none; flex-direction: column; height: 100%; }
         .tab-content.active { display: flex; }
         
-        /* Styles Gestion (Produits/Catégories) */
+        /* Styles Gestion */
         .mg-header-box {
-            background: white; padding: 10px; border-radius: 8px;
-            margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: white; padding: 8px; border-radius: 8px;
+            margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             flex-shrink: 0;
         }
-        .mg-input-row { display: flex; gap: 8px; margin-bottom: 8px; }
-        .mg-actions-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .mg-input-row { display: flex; gap: 6px; margin-bottom: 6px; }
+        .mg-actions-row { display: flex; gap: 6px; flex-wrap: wrap; }
         
         .mg-list, .mg-list-scroll {
             padding: 0; margin: 0;
-            overflow-y: auto; /* Scroll interne */
-            flex: 1; /* Prend tout l'espace restant */
+            overflow-y: auto;
+            flex: 1;
         }
 
         .mg-item, .prep-item { 
             background: white; 
-            padding: 8px 12px; 
-            margin-bottom: 6px; 
-            border-radius: 8px; 
+            padding: 6px 10px; /* Item plus compact */
+            margin-bottom: 4px; 
+            border-radius: 6px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
             cursor: pointer; 
             transition: background 0.2s;
             border: 1px solid transparent;
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
         }
         
         .mg-item:hover, .prep-item:hover { background: #f8f9fa; }
         .mg-item.selected { background: var(--highlight); border-color: #f39c12; }
 
-        .btn-sm { padding: 6px 10px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-sm { padding: 5px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: 600; }
         .btn-save { background: var(--accent); color: white; }
         .btn-save:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
         .btn-delete { background: var(--danger); color: white; }
@@ -202,7 +206,7 @@
         
         .mg-prod-grid { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
         .mg-col { background: white; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 4px rgba(0,0,0,0.05); flex: 1; }
-        .mg-col-header { padding: 8px 12px; background: var(--light-gray); font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #eee; flex-shrink: 0; }
+        .mg-col-header { padding: 6px 10px; background: var(--light-gray); font-weight: bold; font-size: 0.8rem; border-bottom: 1px solid #eee; flex-shrink: 0; }
         .mg-list-scroll { overflow-y: auto; flex: 1; }
         
         /* Styles Préparation */
@@ -210,13 +214,13 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            gap: 10px;
+            gap: 8px;
             position: relative;
         }
         
         .prep-filter-box {
             background: white;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             flex-shrink: 0;
@@ -225,24 +229,24 @@
         
         .prep-filter-select {
             width: 100%;
-            padding: 8px;
-            font-size: 0.9rem;
+            padding: 6px;
+            font-size: 0.85rem;
             border: 1px solid #ddd;
             border-radius: 6px;
             background: #f9f9f9;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        /* Zone de liste principale (défilante) */
+        /* Zone de liste principale (défilante) - Réduit à 55% */
         .prep-list-main {
-            flex: 2; /* Prend 2/3 de l'espace */
+            flex: 5.5; 
             overflow-y: auto;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
-        /* Zone de liste sélectionnée (fixe en bas) */
+        /* Zone de liste sélectionnée (fixe en bas) - Augmenté à 45% */
         .prep-list-selected {
-            flex: 1; /* Prend 1/3 de l'espace */
+            flex: 4.5; /* Augmenté de 3.3 (1/3) à 4.5 pour gagner une ligne */
             background: #e8f8f5;
             border-radius: 12px 12px 0 0;
             border-top: 2px solid var(--accent);
@@ -250,13 +254,14 @@
             flex-direction: column;
             overflow: hidden;
             position: relative;
+            min-height: 120px; /* Garantie d'une hauteur minimale */
         }
 
         .selected-header {
             background: var(--accent);
             color: white;
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            padding: 6px 10px;
+            font-size: 0.8rem;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
@@ -267,18 +272,18 @@
         .prep-list-scroll-area {
             flex: 1;
             overflow-y: auto;
-            padding: 5px;
+            padding: 4px;
         }
         
         .prep-item {
-            margin-bottom: 4px;
-            padding: 6px 10px;
+            margin-bottom: 3px;
+            padding: 5px 8px;
             font-size: 0.85rem;
         }
         
         .prep-info { flex: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-left: 8px; }
         .prep-cat { 
-            font-size: 0.65rem; 
+            font-size: 0.6rem; 
             text-transform: uppercase; 
             color: var(--gray); 
             font-weight: 700; 
@@ -286,7 +291,7 @@
             line-height: 1.1;
         }
         .prep-name { 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             font-weight: 500; 
             line-height: 1.2;
             white-space: nowrap;
@@ -294,8 +299,8 @@
             text-overflow: ellipsis;
         }
         .prep-check input { 
-            width: 20px; 
-            height: 20px; 
+            width: 18px; 
+            height: 18px; 
             accent-color: var(--select); 
             margin: 0;
             flex-shrink: 0;
@@ -306,27 +311,27 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            gap: 15px;
+            gap: 10px;
             overflow-y: auto;
         }
 
         .buy-section {
             background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-height: 0; /* Important pour le scroll interne */
+            min-height: 0;
         }
         
         .buy-section h3 {
-            margin: 0 0 12px 0;
-            font-size: 1rem;
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
             color: var(--primary);
             border-bottom: 2px solid var(--light-gray);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             flex-shrink: 0;
         }
 
@@ -340,10 +345,10 @@
             color: var(--buy);
         }
 
-        #toast { visibility: hidden; min-width: 200px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 12px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #toast { visibility: hidden; min-width: 180px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 10px; position: fixed; z-index: 2000; left: 50%; bottom: 20px; transform: translateX(-50%); font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; animation: fadein 0.3s, fadeout 0.3s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 20px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 20px; opacity: 1;} to {bottom: 0; opacity: 0;} }
         #fileInput { display: none; }
     </style>
 </head>
@@ -373,7 +378,7 @@
     <!-- Bouton Gestion centré plus petit -->
     <div class="middle-section">
         <button class="btn-large btn-manage" onclick="openManageModal()">
-            <span class="btn-icon" style="font-size: 1.5rem;">⚙️</span>
+            <span class="btn-icon" style="font-size: 1.4rem;">⚙️</span>
             <span style="font-size: 0.9rem;">Gestion</span>
         </button>
     </div>
@@ -402,7 +407,7 @@
             <div id="tab-cat" class="tab-content active">
                 <div class="mg-header-box">
                     <div class="mg-input-row">
-                        <input type="text" id="mgCatInput" placeholder="Nom catégorie" style="flex:1; font-size:0.9rem; padding:8px;">
+                        <input type="text" id="mgCatInput" placeholder="Nom catégorie" style="flex:1; font-size:0.85rem; padding:6px;">
                         <button class="btn btn-sm btn-save" id="mgCatBtn" onclick="saveCategory()">Ajouter</button>
                     </div>
                     <div class="mg-actions-row">
@@ -415,11 +420,11 @@
 
             <div id="tab-prod" class="tab-content">
                 <div class="mg-header-box" style="border: 2px solid var(--primary);">
-                    <label style="font-size:0.75rem; color:#666; display:block; margin-bottom:4px;">Catégorie :</label>
-                    <select id="mgProdCatSelect" onchange="onCategoryChange()" style="padding:8px; width:100%; margin-bottom:8px; border:1px solid #ddd; border-radius:6px; font-size:0.9rem;"></select>
+                    <label style="font-size:0.7rem; color:#666; display:block; margin-bottom:2px;">Catégorie :</label>
+                    <select id="mgProdCatSelect" onchange="onCategoryChange()" style="padding:6px; width:100%; margin-bottom:6px; border:1px solid #ddd; border-radius:4px; font-size:0.85rem;"></select>
                     
                     <div class="mg-input-row">
-                        <input type="text" id="mgProdInput" placeholder="Nom produit" style="flex:1; font-size:0.9rem; padding:8px;">
+                        <input type="text" id="mgProdInput" placeholder="Nom produit" style="flex:1; font-size:0.85rem; padding:6px;">
                         <button class="btn btn-sm btn-add" id="mgProdActionBtn" onclick="handleProdAction()">➕</button>
                     </div>
                     <div class="mg-actions-row">
@@ -456,10 +461,10 @@
                     </select>
                 </div>
 
-                <!-- Liste principale (2/3 haut) : Tous les produits -->
+                <!-- Liste principale (55% haut) : Tous les produits -->
                 <div class="prep-list-main" id="prepareListMain"></div>
 
-                <!-- Liste sélectionnée (1/3 bas) : Fixe -->
+                <!-- Liste sélectionnée (45% bas) : Fixe -->
                 <div class="prep-list-selected">
                     <div class="selected-header">
                         <span>À acheter (Sélectionnés)</span>
@@ -704,12 +709,12 @@
 
         filtered.forEach(item => {
             const div = document.createElement('div');
-            div.style.padding = "10px 12px";
+            div.style.padding = "8px 10px";
             div.style.borderBottom = "1px solid #f1f1f1";
             div.style.cursor = "pointer";
             if (editProdId === item.id) div.style.background = "#fff3cd";
             div.onclick = () => selectProductForEdit(item.id);
-            div.innerHTML = `<span style="font-size:0.9rem;">${item.name}</span>`;
+            div.innerHTML = `<span style="font-size:0.85rem;">${item.name}</span>`;
             list.appendChild(div);
         });
     }
@@ -800,7 +805,6 @@
         }
 
         // Tri : Non-prêts en haut, Prêts en bas (pour la liste principale)
-        // Pour la liste sélectionnée, on trie alphabétiquement
         filteredItems.sort((a,b) => {
             if (a.isReady === b.isReady) return a.name.localeCompare(b.name, 'fr');
             return a.isReady ? 1 : -1; 
