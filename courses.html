@@ -27,50 +27,51 @@
             margin: 0;
             padding: 0;
             color: var(--text);
-            font-size: 13px; /* Réduit de 14px à 13px pour gagner de la place */
+            font-size: 13px;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Empêche le scroll global sur mobile */
+            overflow: hidden;
         }
 
-        /* --- ÉCRAN D'ACCUEIL --- */
+        /* --- ÉCRAN D'ACCUEIL (CORRIGÉ) --- */
         .home-container { 
             flex: 1;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            padding: 10px 15px; /* Padding réduit */
+            padding: 5px 15px 10px 15px; /* Padding haut réduit à 5px */
             max-width: 600px;
             margin: 0 auto;
             width: 100%;
-            overflow-y: auto; /* Permet le scroll si l'écran est très petit */
+            overflow-y: auto;
+            justify-content: flex-start; /* Aligne tout en haut */
         }
 
         header { 
             text-align: center; 
-            margin-top: 20px; /* Plus haut mais moins de marge */
-            margin-bottom: 25px; 
+            margin-top: 5px; /* Presque collé en haut */
+            margin-bottom: 15px; /* Marge réduite */
             width: 100%;
         }
-        h1 { margin: 0; font-size: 1.8rem; color: var(--primary); }
-        .subtitle { font-size: 0.85rem; color: var(--gray); margin-top: 4px; }
+        h1 { margin: 0; font-size: 1.6rem; color: var(--primary); }
+        .subtitle { font-size: 0.8rem; color: var(--gray); margin-top: 2px; }
 
         /* Grille du haut : 2 boutons côte à côte */
         .top-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px; /* Gap réduit */
+            gap: 12px; /* Gap réduit */
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Marge réduite */
         }
 
         .btn-large {
-            border: none; padding: 15px 5px; /* Padding vertical réduit */
+            border: none; padding: 12px 5px; /* Padding vertical réduit */
             border-radius: 12px;
-            font-size: 1rem; font-weight: 600; cursor: pointer;
+            font-size: 0.95rem; font-weight: 600; cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
             transition: transform 0.1s, box-shadow 0.1s;
             color: white;
             aspect-ratio: 1/1;
@@ -80,29 +81,29 @@
         .btn-prepare { background: var(--select); }
         .btn-buy { background: var(--buy); }
         
-        .btn-icon { font-size: 2.2rem; /* Icône légèrement réduite */ }
+        .btn-icon { font-size: 2rem; /* Icône réduite */ }
 
         /* Bouton Gestion centré plus petit */
         .middle-section {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Marge réduite */
         }
 
         .btn-manage { 
             background: #8e44ad; 
-            padding: 10px 25px; 
+            padding: 8px 20px; 
             border-radius: 50px; 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             aspect-ratio: auto;
             width: auto;
-            min-width: 140px;
+            min-width: 130px;
         }
 
         /* Boutons bas */
         .bottom-actions {
-            margin-top: auto;
+            margin-top: 5px; /* Presque collé au bouton gestion */
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
@@ -113,9 +114,9 @@
 
         .btn-small {
             background: white; border: 2px solid var(--primary); color: var(--primary);
-            padding: 8px 16px; border-radius: 50px;
-            font-size: 0.8rem; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border-radius: 50px;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .btn-small:active { transform: scale(0.96); }
@@ -139,7 +140,7 @@
 
         .modal-header { 
             background: var(--primary); color: white; 
-            padding: 10px 15px; /* Header réduit */
+            padding: 10px 15px;
             display: flex; justify-content: space-between; align-items: center; 
             flex-shrink: 0;
             min-height: 50px;
@@ -154,7 +155,7 @@
         .modal-body { 
             flex: 1; 
             overflow: hidden;
-            padding: 8px; /* Padding réduit */
+            padding: 8px;
             display: flex; 
             flex-direction: column; 
             position: relative;
@@ -180,7 +181,7 @@
 
         .mg-item, .prep-item { 
             background: white; 
-            padding: 6px 10px; /* Item plus compact */
+            padding: 6px 10px;
             margin-bottom: 4px; 
             border-radius: 6px; 
             display: flex; 
@@ -237,16 +238,14 @@
             margin-bottom: 6px;
         }
 
-        /* Zone de liste principale (défilante) - Réduit à 55% */
         .prep-list-main {
             flex: 5.5; 
             overflow-y: auto;
             padding-bottom: 5px;
         }
 
-        /* Zone de liste sélectionnée (fixe en bas) - Augmenté à 45% */
         .prep-list-selected {
-            flex: 4.5; /* Augmenté de 3.3 (1/3) à 4.5 pour gagner une ligne */
+            flex: 4.5; 
             background: #e8f8f5;
             border-radius: 12px 12px 0 0;
             border-top: 2px solid var(--accent);
@@ -254,7 +253,7 @@
             flex-direction: column;
             overflow: hidden;
             position: relative;
-            min-height: 120px; /* Garantie d'une hauteur minimale */
+            min-height: 120px;
         }
 
         .selected-header {
@@ -383,7 +382,7 @@
         </button>
     </div>
 
-    <!-- Boutons Sauvegarde tout en bas -->
+    <!-- Boutons Sauvegarde tout en bas (remontés) -->
     <div class="bottom-actions">
         <button class="btn-small" onclick="exportData()">💾 Sauvegarder</button>
         <button class="btn-small" onclick="document.getElementById('fileInput').click()">📂 Restaurer</button>
