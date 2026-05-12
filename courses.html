@@ -18,9 +18,9 @@
             --light-gray: #ecf0f1;
             --highlight: #fff3cd;
         }
-    
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
@@ -28,13 +28,12 @@
             padding: 0;
             color: var(--text);
             font-size: 13px;
-            /* CORRECTION : Utilisation de dvh pour s'adapter aux barres mobiles */
-            height: 100dvh; 
+            height: 100dvh; /* Hauteur dynamique pour mobile */
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
-    
+
         /* --- ÉCRAN D'ACCUEIL --- */
         .home-container { 
             flex: 1;
@@ -47,80 +46,44 @@
             width: 100%;
             overflow-y: auto;
             justify-content: flex-start;
-            /* CORRECTION : Padding bas augmenté pour éviter la superposition */
-            padding-bottom: 30px; 
+            padding-bottom: 30px;
         }
-    
-        header { 
-            text-align: center; 
-            margin-top: 5px; 
-            margin-bottom: 15px; 
-            width: 100%;
-        }
+
+        header { text-align: center; margin-top: 5px; margin-bottom: 15px; width: 100%; }
         h1 { margin: 0; font-size: 1.6rem; color: var(--primary); }
         .subtitle { font-size: 0.8rem; color: var(--gray); margin-top: 2px; }
-    
-        .top-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-    
+
+        .top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 15px; }
+
         .btn-large {
-            border: none; padding: 12px 5px;
-            border-radius: 12px;
+            border: none; padding: 12px 5px; border-radius: 12px;
             font-size: 0.95rem; font-weight: 600; cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             display: flex; flex-direction: column; align-items: center; gap: 6px;
-            transition: transform 0.1s, box-shadow 0.1s;
-            color: white;
-            aspect-ratio: 1/1;
+            transition: transform 0.1s, box-shadow 0.1s; color: white; aspect-ratio: 1/1;
         }
         .btn-large:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .btn-prepare { background: var(--select); }
         .btn-buy { background: var(--buy); }
-        
         .btn-icon { font-size: 2rem; }
-    
-        .middle-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-    
+
+        .middle-section { width: 100%; display: flex; justify-content: center; margin-bottom: 10px; }
+
         .btn-manage { 
-            background: #8e44ad; 
-            padding: 8px 20px; 
-            border-radius: 50px; 
-            font-size: 0.9rem; 
-            aspect-ratio: auto;
-            width: auto;
-            min-width: 130px;
+            background: #8e44ad; padding: 8px 20px; border-radius: 50px; 
+            font-size: 0.9rem; aspect-ratio: auto; width: auto; min-width: 130px; 
         }
-    
-        .bottom-actions {
-            margin-top: 5px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-            padding-bottom: 10px;
-        }
-    
+
+        .bottom-actions { margin-top: 5px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%; padding-bottom: 10px; }
+
         .btn-small {
             background: white; border: 2px solid var(--primary); color: var(--primary);
-            padding: 6px 12px; border-radius: 50px;
-            font-size: 0.75rem; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .btn-small:active { transform: scale(0.96); }
-    
+
         /* --- MODALS --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -131,20 +94,17 @@
         
         .modal-content {
             background: var(--bg); width: 100%; max-width: 600px;
-            /* CORRECTION : Hauteur dynamique pour le modal aussi */
             height: 100dvh;
             display: flex; flex-direction: column;
             animation: slideDown 0.3s ease-out;
         }
         
         @keyframes slideDown { from {transform: translateY(-100%);} to {transform: translateY(0);} }
-    
+
         .modal-header { 
             background: var(--primary); color: white; 
-            padding: 10px 15px;
-            display: flex; justify-content: space-between; align-items: center; 
-            flex-shrink: 0;
-            min-height: 50px;
+            padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; 
+            flex-shrink: 0; min-height: 50px;
         }
         .modal-header h2 { margin: 0; font-size: 1.1rem; }
         .close-btn { background: none; border: none; color: white; font-size: 1.6rem; cursor: pointer; padding: 0 5px; line-height: 1; }
@@ -154,12 +114,8 @@
         .tab.active { border-bottom-color: var(--primary); color: var(--primary); background: #f9f9f9; }
         
         .modal-body { 
-            flex: 1; 
-            overflow: hidden;
-            padding: 8px;
-            display: flex; 
-            flex-direction: column; 
-            position: relative;
+            flex: 1; overflow: hidden; padding: 8px;
+            display: flex; flex-direction: column; position: relative;
         }
         
         .tab-content { display: none; flex-direction: column; height: 100%; }
@@ -168,38 +124,36 @@
         /* Styles Gestion */
         .mg-header-box {
             background: white; padding: 8px; border-radius: 8px;
-            margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            flex-shrink: 0;
+            margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); flex-shrink: 0;
         }
         .mg-input-row { display: flex; gap: 6px; margin-bottom: 6px; }
         .mg-actions-row { display: flex; gap: 6px; flex-wrap: wrap; }
         
-        .mg-list, .mg-list-scroll {
+        /* CORRECTION : Conteneur défilant pour les catégories avec hauteur max */
+        .mg-cat-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 40px; /* Espace bas */
+            margin: 0;
+        }
+
+        .mg-list-scroll {
             padding: 0; margin: 0;
             overflow-y: auto;
             flex: 1;
-            /* CORRECTION : Espace de sécurité en bas de liste */
-            padding-bottom: 40px; 
+            padding-bottom: 40px;
         }
-    
+
         .mg-item, .prep-item { 
-            background: white; 
-            padding: 6px 10px;
-            margin-bottom: 4px; 
-            border-radius: 6px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
-            cursor: pointer; 
-            transition: background 0.2s;
-            border: 1px solid transparent;
-            font-size: 0.85rem; 
+            background: white; padding: 6px 10px; margin-bottom: 4px; border-radius: 6px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer; 
+            transition: background 0.2s; border: 1px solid transparent; font-size: 0.85rem; 
         }
         
         .mg-item:hover, .prep-item:hover { background: #f8f9fa; }
         .mg-item.selected { background: var(--highlight); border-color: #f39c12; }
-    
+
         .btn-sm { padding: 5px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: 600; }
         .btn-save { background: var(--accent); color: white; }
         .btn-save:disabled { background: var(--gray); cursor: not-allowed; opacity: 0.7; }
@@ -213,153 +167,97 @@
         .mg-col-header { padding: 6px 10px; background: var(--light-gray); font-weight: bold; font-size: 0.8rem; border-bottom: 1px solid #eee; flex-shrink: 0; }
         
         /* Styles Préparation */
-        .prep-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 8px;
-            position: relative;
-        }
+        .prep-container { display: flex; flex-direction: column; height: 100%; gap: 8px; position: relative; }
         
         .prep-filter-box {
-            background: white;
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-            z-index: 5;
+            background: white; padding: 8px; border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0; z-index: 5;
         }
         
-        .prep-filter-select {
-            width: 100%;
-            padding: 6px;
-            font-size: 0.85rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background: #f9f9f9;
-            margin-bottom: 6px;
-        }
-    
+        .prep-filter-select { width: 100%; padding: 6px; font-size: 0.85rem; border: 1px solid #ddd; border-radius: 6px; background: #f9f9f9; margin-bottom: 6px; }
+
         .prep-list-main {
             flex: 5.5; 
             overflow-y: auto;
-            /* CORRECTION : Espace de sécurité en bas de liste */
-            padding-bottom: 40px; 
+            padding-bottom: 40px; /* Espace bas */
         }
-    
+
         .prep-list-selected {
             flex: 4.5; 
             background: #e8f8f5;
             border-radius: 12px 12px 0 0;
             border-top: 2px solid var(--accent);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            min-height: 120px;
+            /* CORRECTION : Bordure bas explicite */
+            border-bottom: 2px solid var(--accent); 
+            display: flex; flex-direction: column; overflow: hidden; 
+            position: relative; min-height: 120px;
         }
-    
+
         .selected-header {
-            background: var(--accent);
-            color: white;
-            padding: 6px 10px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
+            background: var(--accent); color: white;
+            padding: 6px 10px; font-size: 0.8rem; font-weight: bold;
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
         }
-    
+
         .prep-list-scroll-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 4px;
-            /* CORRECTION : Espace de sécurité en bas de liste */
-            padding-bottom: 40px; 
+            flex: 1; overflow-y: auto; padding: 4px;
+            padding-bottom: 40px; /* Espace bas crucial */
         }
         
-        .prep-item {
-            margin-bottom: 3px;
-            padding: 5px 8px;
-            font-size: 0.85rem;
-        }
+        .prep-item { margin-bottom: 3px; padding: 5px 8px; font-size: 0.85rem; }
         
         .prep-info { flex: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-left: 8px; }
-        .prep-cat { 
-            font-size: 0.6rem; 
-            text-transform: uppercase; 
-            color: var(--gray); 
-            font-weight: 700; 
-            display: block; 
-            line-height: 1.1;
-        }
-        .prep-name { 
-            font-size: 0.85rem; 
-            font-weight: 500; 
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .prep-check input { 
-            width: 18px; 
-            height: 18px; 
-            accent-color: var(--select); 
-            margin: 0;
-            flex-shrink: 0;
-        }
-    
+        .prep-cat { font-size: 0.6rem; text-transform: uppercase; color: var(--gray); font-weight: 700; display: block; line-height: 1.1; }
+        .prep-name { font-size: 0.85rem; font-weight: 500; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .prep-check input { width: 18px; height: 18px; accent-color: var(--select); margin: 0; flex-shrink: 0; }
+
         /* Styles Achats */
         .buy-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 10px;
-            overflow-y: auto;
-            /* CORRECTION : Espace de sécurité global pour les achats */
-            padding-bottom: 40px;
+            display: flex; flex-direction: column; height: 100%; gap: 10px;
+            overflow-y: auto; padding-bottom: 40px;
         }
-    
+
         .buy-section {
-            background: white;
-            border-radius: 10px;
-            padding: 10px;
+            background: white; border-radius: 10px; padding: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
+            flex: 1; display: flex; flex-direction: column; min-height: 0;
         }
         
         .buy-section h3 {
-            margin: 0 0 8px 0;
-            font-size: 0.95rem;
-            color: var(--primary);
-            border-bottom: 2px solid var(--light-gray);
-            padding-bottom: 6px;
-            flex-shrink: 0;
+            margin: 0 0 8px 0; font-size: 0.95rem; color: var(--primary);
+            border-bottom: 2px solid var(--light-gray); padding-bottom: 6px; flex-shrink: 0;
         }
-    
+
         .buy-list-wrapper {
-            flex: 1;
-            overflow-y: auto;
-            /* CORRECTION : Espace de sécurité dans les listes d'achats */
-            padding-bottom: 40px;
+            flex: 1; overflow-y: auto;
+            /* CORRECTION : Espace bas et bordure si nécessaire */
+            padding-bottom: 40px; 
         }
-    
-        .buy-item-checked .prep-name {
-            font-weight: 700;
-            color: var(--buy);
+        
+        /* Bordure basse explicite pour les sections d'achats */
+        #buyTopList, #buyBottomList {
+            min-height: 50px; /* Force une hauteur min pour voir le bord */
         }
-    
+
+        .buy-item-checked .prep-name { font-weight: 700; color: var(--buy); }
+
+        /* Scrollbar styling pour être visible partout */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        
+        /* Firefox */
+        * { scrollbar-width: thin; scrollbar-color: #ccc #f1f1f1; }
+
         #toast { visibility: hidden; min-width: 180px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 10px; position: fixed; z-index: 2000; left: 50%; bottom: 20px; transform: translateX(-50%); font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; animation: fadein 0.3s, fadeout 0.3s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 20px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 20px; opacity: 1;} to {bottom: 0; opacity: 0;} }
         #fileInput { display: none; }
-    </style></head>
-    
+    </style>
+</head>
+
 <body>
 
 <!-- ÉCRAN D'ACCUEIL -->
@@ -369,20 +267,17 @@
         <div class="subtitle">Gestion simple et rapide</div>
     </header>
 
-    <!-- Deux boutons côte à côte -->
     <div class="top-grid">
         <button class="btn-large btn-prepare" onclick="openPrepareModal()">
             <span class="btn-icon">📝</span>
             <span>Préparation</span>
         </button>
-        
         <button class="btn-large btn-buy" onclick="openBuyModal()">
             <span class="btn-icon">🛒</span>
             <span>Achats</span>
         </button>
     </div>
 
-    <!-- Bouton Gestion centré plus petit -->
     <div class="middle-section">
         <button class="btn-large btn-manage" onclick="openManageModal()">
             <span class="btn-icon" style="font-size: 1.4rem;">⚙️</span>
@@ -390,7 +285,6 @@
         </button>
     </div>
 
-    <!-- Boutons Sauvegarde tout en bas (remontés) -->
     <div class="bottom-actions">
         <button class="btn-small" onclick="exportData()">💾 Sauvegarder</button>
         <button class="btn-small" onclick="document.getElementById('fileInput').click()">📂 Restaurer</button>
@@ -422,7 +316,8 @@
                         <button class="btn btn-sm btn-cancel" id="mgCatCancelBtn" onclick="cancelCatEdit()" style="display:none;">Annuler</button>
                     </div>
                 </div>
-                <ul class="mg-list" id="mgCatList"></ul>
+                <!-- CORRECTION : Conteneur dédié avec scroll pour les catégories -->
+                <ul class="mg-cat-list-container" id="mgCatList"></ul>
             </div>
 
             <div id="tab-prod" class="tab-content">
@@ -461,17 +356,14 @@
         </div>
         <div class="modal-body">
             <div class="prep-container">
-                <!-- Filtre en haut -->
                 <div class="prep-filter-box">
                     <select id="prepCategoryFilter" class="prep-filter-select" onchange="renderPrepareList()">
                         <option value="Tous">Toutes catégories</option>
                     </select>
                 </div>
 
-                <!-- Liste principale (55% haut) : Tous les produits -->
                 <div class="prep-list-main" id="prepareListMain"></div>
 
-                <!-- Liste sélectionnée (45% bas) : Fixe -->
                 <div class="prep-list-selected">
                     <div class="selected-header">
                         <span>À acheter (Sélectionnés)</span>
@@ -771,12 +663,11 @@
         renderMgProducts(false);
     }
 
-    // --- PRÉPARER (NOUVELLE LOGIQUE) ---
+    // --- PRÉPARER ---
     function openPrepareModal() {
         const modal = document.getElementById('prepareModal');
         const filterSelect = document.getElementById('prepCategoryFilter');
         
-        // Remplir le filtre
         filterSelect.innerHTML = '<option value="Tous">Toutes catégories</option>';
         titles.forEach(t => {
             if(t !== "Aucun") {
@@ -805,13 +696,11 @@
         mainContainer.innerHTML = "";
         selectedContainer.innerHTML = "";
         
-        // 1. Filtrer tous les éléments selon la catégorie
         let filteredItems = items;
         if (filterVal !== "Tous") {
             filteredItems = filteredItems.filter(i => i.title === filterVal);
         }
 
-        // Tri : Non-prêts en haut, Prêts en bas (pour la liste principale)
         filteredItems.sort((a,b) => {
             if (a.isReady === b.isReady) return a.name.localeCompare(b.name, 'fr');
             return a.isReady ? 1 : -1; 
@@ -826,7 +715,6 @@
                 const div = document.createElement('div');
                 div.className = 'prep-item';
                 
-                // Construction du contenu HTML commun
                 const checkboxHtml = `
                     <div class="prep-check">
                         <input type="checkbox" ${item.isReady ? 'checked' : ''} onclick="event.stopPropagation(); toggleReady(${item.id})">
@@ -840,14 +728,12 @@
                 `;
 
                 if (item.isReady) {
-                    // Élément sélectionné -> Liste du bas
                     readyCount++;
                     div.style.background = "white";
                     div.style.borderLeft = "4px solid var(--accent)";
                     div.innerHTML = checkboxHtml + infoHtml;
                     selectedContainer.appendChild(div);
                 } else {
-                    // Élément non sélectionné -> Liste du haut
                     div.innerHTML = checkboxHtml + infoHtml;
                     mainContainer.appendChild(div);
                 }
@@ -865,7 +751,7 @@
         const item = items.find(i => i.id === id);
         if (item) {
             item.isReady = !item.isReady;
-            if (!item.isReady) item.isBought = false; // Reset achat si on retire de la liste
+            if (!item.isReady) item.isBought = false;
             saveData();
             renderPrepareList();
         }
