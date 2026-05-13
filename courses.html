@@ -670,12 +670,10 @@
         
         filterSelect.innerHTML = '<option value="Tous">Toutes catégories</option>';
         titles.forEach(t => {
-            if(t !== "Aucun") {
-                const opt = document.createElement('option'); 
-                opt.value = t; 
-                opt.textContent = t;
-                filterSelect.appendChild(opt);
-            }
+            const opt = document.createElement('option'); 
+            opt.value = t; 
+            opt.textContent = t;
+            filterSelect.appendChild(opt);
         });
 
         renderPrepareList();
